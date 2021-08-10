@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "mobile-atu",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
