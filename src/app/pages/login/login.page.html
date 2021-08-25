@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Smart ATU</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form (ngSubmit)="login()" [formGroup]="credentials">
+    <div class="input-group">
+      <ion-item>
+        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+        <span *ngIf="email.errors?.required">Email пустое</span>
+        <span *ngIf="email.errors?.email">Email некорректное</span>
+      </div>
+      <ion-item>
+        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+        <span *ngIf="password.errors?.required">Пароль пустое</span>
+        <span *ngIf="password.errors?.minlength">Пароль должен состоять минимум из 6 символов</span>
+      </div>
+    </div>
+
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Войти</ion-button>
+    <ion-button type="button" expand="block" color="light" fill="clear"> Зарегистрироваться!
+    </ion-button>
+
+  </form>
+</ion-content>
