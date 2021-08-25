@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 })
 export class RegisterPage implements OnInit {
   credentials: FormGroup;
+
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               private alertController: AlertController,
@@ -19,14 +20,27 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {
       this.credentials = this.fb.group({
-        email: [],
-        password: [],
-        iin: [],
-        telephone: [],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        iin: ['', [Validators.required]],
+        telephone: ['', [Validators.required]],
       });
   }
   async register(){
 
+  }
+  get email() {
+    return this.credentials.get('email');
+  }
+
+  get password() {
+    return this.credentials.get('password');
+  }
+  get iin() {
+    return this.credentials.get('iin');
+  }
+  get telephone() {
+    return this.credentials.get('telephone');
   }
 
 
