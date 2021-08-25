@@ -15,6 +15,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule)
   },
   {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
+    canLoad: [IntroGuard, AutoLoginGuard]
+  },
+  {
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule),
     canLoad: [AuthGuard]
@@ -23,10 +28,6 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
 ];
 @NgModule({

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Router } from '@angular/router';
 import { Storage } from '@capacitor/storage';
 
-export const INTRO_KEY = 'intro-seen1';
+export const INTRO_KEY = 'intro-seen2';
 
 @Injectable({
   providedIn: 'root'
