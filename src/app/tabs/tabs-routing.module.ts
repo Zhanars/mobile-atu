@@ -4,32 +4,32 @@ import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: '',
     component: TabsPage,
     children: [
       {
         path: 'home',
-        loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+        loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
         path: 'service',
-        loadChildren: () => import('../service/service.module').then(m => m.ServicePageModule)
+        loadChildren: () => import('../pages/service/service.module').then(m => m.ServicePageModule)
       },
       {
         path: 'document',
-        loadChildren: () => import('../document/document.module').then(m => m.DocumentPageModule)
+        loadChildren: () => import('../pages/document/document.module').then(m => m.DocumentPageModule)
       },
       {
         path: 'info',
-        loadChildren: () => import('../info/info.module').then(m => m.InfoPageModule)
+        loadChildren: () => import('../pages/info/info.module').then(m => m.InfoPageModule)
       },
       {
         path: 'notification',
-        loadChildren: () => import('../notification/notification.module').then(m => m.NotificationPageModule)
+        loadChildren: () => import('../pages/notification/notification.module').then(m => m.NotificationPageModule)
       },
       {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+        loadChildren: () => import('../pages/profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
         path: '',
@@ -37,15 +37,11 @@ const routes: Routes = [
         pathMatch: 'full'
       }
     ]
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/home',
-    pathMatch: 'full'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TabsPageRoutingModule {}
