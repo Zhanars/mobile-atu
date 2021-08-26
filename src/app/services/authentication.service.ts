@@ -15,13 +15,11 @@ const TOKEN_KEY = 'USER';
 })
 export class AuthenticationService {
 
-  userName: string = "";
-  iin: string = "";
 
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
 
-  constructor( private http: HttpClient, private alertController: AlertController) {
+  constructor( private http: HttpClient) {
     this.loadToken();
   }
 
@@ -40,7 +38,7 @@ export class AuthenticationService {
     const md5 = new Md5();
     const fdate = new Date();
     const realDate = (fdate.getFullYear() + "-" + (fdate.getMonth() + 1) + "-" + fdate.getDate()).toString();
-    const urlstring = `http://socket.atu.kz/api/users/select.php/?key=` + md5.appendStr(realDate).end() + '&email=' + credentials.email + '&password=' + md5.appendStr(credentials.password).end();
+    const urlstring = `https://socket.atu.kz/api/users/select.php/?key=` + md5.appendStr(realDate).end() + '&email=' + credentials.email + '&password=' + md5.appendStr(credentials.password).end();
     console.log(urlstring);
     return this.http.post(urlstring, '');
   }

@@ -18,7 +18,7 @@ export class RegistrationService {
     const md5 = new Md5();
     const fdate = new Date();
     const realDate = (fdate.getFullYear() + "-" + (fdate.getMonth() + 1) + "-" + fdate.getDate()).toString();
-    const urlstring = `http://socket.atu.kz/api/users/insert.php/?key=` + md5.appendStr(realDate).end() + '&email=' + credentials.email + '&iin=' + credentials.iin + '&telephone=' + credentials.tel + '&password=' + md5.appendStr(credentials.password).end();
+    const urlstring = `https://socket.atu.kz/api/users/insert.php/?key=` + md5.appendStr(realDate).end() + '&email=' + credentials.email + '&iin=' + credentials.iin + '&telephone=' + credentials.tel + '&password=' + md5.appendStr(credentials.password).end();
     console.log(urlstring);
     return this.http.post(urlstring, '');
   }
