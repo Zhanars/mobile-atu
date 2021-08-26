@@ -19,9 +19,9 @@ export class RegistrationService {
     let result;
     const realDate = this.fdate.getFullYear() + "-" + (this.fdate.getMonth() + 1) + "-" + this.fdate.getDate() + " " + (this.fdate.getHours() - 6);
     const urlstring = `http://socket.atu.kz/api/users/insert.php/?key=` + this.md5.appendStr(realDate.toString()).end();
-    result = this.http.post(urlstring, credentials);
+
     console.log(urlstring + "  -->" + realDate);
     console.log("Данные: " + credentials.email + "-" + credentials.iin + "-" + credentials.password + "-" + credentials.telephone);
-    return result;
+    return this.http.post(urlstring, credentials);
   }
 }

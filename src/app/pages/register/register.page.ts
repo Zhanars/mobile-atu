@@ -32,6 +32,7 @@ export class RegisterPage implements OnInit {
 
     this.RegService.register(this.credentials.value).subscribe(
       async (res) => {
+        console.log(res);
         await loading.dismiss();
         this.router.navigateByUrl('/tabs', { replaceUrl: true });
       },
