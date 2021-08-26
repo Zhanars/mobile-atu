@@ -1,0 +1,18 @@
+#notification-button {
+  position: relative;
+  width: 42px;
+  top:1px;
+  right: 1px;
+  overflow: visible!important;
+  z-index: 1;
+}
+
+
+#notifications-badge {
+  background-color: red;
+  position: absolute;
+  top: 6px;
+  right: -1px;
+  border-radius: 100%;
+  z-index: 2;
+}
