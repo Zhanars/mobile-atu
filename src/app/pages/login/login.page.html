@@ -19,7 +19,7 @@
         <span *ngIf="email.errors?.email">Email некорректное</span>
       </div>
       <ion-item>
-        <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+        <ion-input type="password" placeholder="Пароль" formControlName="password"></ion-input>
       </ion-item>
       <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
         <span *ngIf="password.errors?.required">Пароль пустое</span>

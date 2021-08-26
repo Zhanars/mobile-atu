@@ -16,17 +16,18 @@
         <span *ngIf="email.errors?.email">Поле e-mail некорректное</span>
       </div>
       <ion-item>
-        <ion-input type="number" placeholder="ИИН/Номер документа" formControlName="iin"></ion-input>
+        <ion-input type="text" placeholder="ИИН/Номер документа" formControlName="iin"></ion-input>
       </ion-item>
       <div *ngIf="(iin.dirty || iin.touched) && iin.errors" class="errors">
         <span *ngIf="iin.errors?.required">Поле ИИН пустое</span>
       </div>
       <ion-item>
-        <ion-input type="text" placeholder="Введите номер телефона" formControlName="telephone"></ion-input>
+        <ion-input type="tel" placeholder="Введите номер телефона" formControlName="tel" autocorrect="on"></ion-input>
       </ion-item>
 
-      <div *ngIf="(telephone.dirty || telephone.touched) && telephone.errors" class="errors">
-        <span *ngIf="telephone.errors?.required">Поле номер телефона пустое</span>
+      <div *ngIf="(tel.dirty || tel.touched) && tel.errors" class="errors">
+        <span *ngIf="tel.errors?.required">Поле номер телефона пустое</span>
+        <span *ngIf="tel.errors?.pattern">Номер телефона некорректое</span>
       </div>
       <ion-item>
         <ion-input type="password" placeholder="Пароль" formControlName="password"></ion-input>

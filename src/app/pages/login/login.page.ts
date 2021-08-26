@@ -3,6 +3,7 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular'
 import { Router } from '@angular/router';
+import {Storage} from "@capacitor/storage";
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,8 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.credentials = this.fb.group({
-      email: ['uit@atu.kz', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
   async login() {
@@ -29,14 +30,15 @@ export class LoginPage implements OnInit {
     await loading.present();
     this.authService.login(this.credentials.value).subscribe(
       async (res) => {
+
+        Storage.set({ key: 'USER', value: 'key_value' });
         await loading.dismiss();
         this.router.navigateByUrl('/tabs', { replaceUrl: true });
       },
       async (res) => {
         await loading.dismiss();
         const alert = await this.alertController.create({
-          header: 'Ошибка входа',
-          message: res.error.error,
+          message: "Email/пароль не правильно",
           buttons: ['OK'],
         });
 

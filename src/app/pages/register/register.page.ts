@@ -23,7 +23,7 @@ export class RegisterPage implements OnInit {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         iin: ['', [Validators.required]],
-        telephone: ['', [Validators.required]],
+        tel: ['', [Validators.required, Validators.pattern('[- +()0-9]+')]],
       });
   }
   async register(){
@@ -32,18 +32,22 @@ export class RegisterPage implements OnInit {
 
     this.RegService.register(this.credentials.value).subscribe(
       async (res) => {
-        console.log(res);
-        await loading.dismiss();
-        this.router.navigateByUrl('/tabs', { replaceUrl: true });
-      },
-      async (res) => {
-        await loading.dismiss();
         const alert = await this.alertController.create({
-          header: 'Сервер недоступен. Попробуйте позже.',
           message: res.text,
           buttons: ['OK'],
         });
         await alert.present();
+        await loading.dismiss();
+        if (res.code == 11)
+        this.router.navigateByUrl('/login', { replaceUrl: true });
+      },
+      async (res) => {
+        const alert = await this.alertController.create({
+          message: 'Сервер недоступен, попробуйте позже',
+          buttons: ['OK'],
+        });
+        await alert.present();
+        await loading.dismiss();
       }
     );
   }
@@ -57,8 +61,8 @@ export class RegisterPage implements OnInit {
   get iin() {
     return this.credentials.get('iin');
   }
-  get telephone() {
-    return this.credentials.get('telephone');
+  get tel() {
+    return this.credentials.get('tel');
   }
 
 

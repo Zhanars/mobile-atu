@@ -4,8 +4,11 @@ import { map, tap, switchMap } from 'rxjs/operators';
 import {BehaviorSubject, from, Observable, pipe, Subject} from 'rxjs';
 import {Md5} from 'ts-md5/dist/md5';
 import { Storage } from '@capacitor/storage';
+import {AlertController} from "@ionic/angular";
 
-const TOKEN_KEY = 'my-token';
+const TOKEN_KEY = 'USER';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,7 @@ export class AuthenticationService {
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token = '';
 
-  constructor( private http: HttpClient) {
+  constructor( private http: HttpClient, private alertController: AlertController) {
     this.loadToken();
   }
 
@@ -35,9 +38,11 @@ export class AuthenticationService {
 
   login(credentials: {email, password}) {
     const md5 = new Md5();
-    let quest = 'https://socket.atu.kz/api/users/login/?email=' + credentials.email + '&password=' + md5.appendStr(credentials.password).end();
-    console.log(quest);
-    return this.http.get(quest);
+    const fdate = new Date();
+    const realDate = (fdate.getFullYear() + "-" + (fdate.getMonth() + 1) + "-" + fdate.getDate()).toString();
+    const urlstring = `http://socket.atu.kz/api/users/select.php/?key=` + md5.appendStr(realDate).end() + '&email=' + credentials.email + '&password=' + md5.appendStr(credentials.password).end();
+    console.log(urlstring);
+    return this.http.post(urlstring, '');
   }
   logout(): Promise<void> {
     this.isAuthenticated.next(false);
