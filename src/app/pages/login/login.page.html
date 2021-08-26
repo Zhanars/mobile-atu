@@ -4,10 +4,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+  <ion-content>
+    <div class="content-box">
 
   <form (ngSubmit)="login()" [formGroup]="credentials">
+   <p class="imglogo"><img  src="./../../../assets/icon/logo1.png"></p>
     <div class="input-group">
+      <p class="register-text">Форма авторизации</p>
       <ion-item>
         <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
       </ion-item>
@@ -22,11 +25,24 @@
         <span *ngIf="password.errors?.required">Пароль пустое</span>
         <span *ngIf="password.errors?.minlength">Пароль должен состоять минимум из 6 символов</span>
       </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6" offset="3"  class="ion-align-self-center">
+
+              <ion-button  size="default" type="submit" expand="block" [disabled]="!credentials.valid">Войти</ion-button>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+         <ion-button type="button" size="small" expand="block" (click)="registerGo()" color="medium" fill="clear"> Забыли логин/пароль?</ion-button>
+         <ion-button type="button" size="small" expand="block" (click)="registerGo()" color="medium" fill="clear"> Создать аккаунт</ion-button>
     </div>
 
-    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Войти</ion-button>
-    <ion-button type="button" expand="block" (click)="registerGo()" color="light" fill="clear"> Зарегистрироваться!
-    </ion-button>
+
 
   </form>
-</ion-content>
+    </div>
+  </ion-content>
+

@@ -9,30 +9,30 @@
   <form (ngSubmit)="register()" [formGroup]="credentials">
     <div class="input-group">
       <ion-item>
-        <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+        <ion-input type="email" placeholder="Введите e-mail" formControlName="email"></ion-input>
       </ion-item>
       <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-        <span *ngIf="email.errors?.required">Email пустое</span>
-        <span *ngIf="email.errors?.email">Email некорректное</span>
+        <span *ngIf="email.errors?.required">Поле e-mail пустое</span>
+        <span *ngIf="email.errors?.email">Поле e-mail некорректное</span>
       </div>
       <ion-item>
-        <ion-input type="number" placeholder="iin" formControlName="iin"></ion-input>
+        <ion-input type="number" placeholder="ИИН/Номер документа" formControlName="iin"></ion-input>
       </ion-item>
       <div *ngIf="(iin.dirty || iin.touched) && iin.errors" class="errors">
-        <span *ngIf="iin.errors?.required">iin пустое</span>
+        <span *ngIf="iin.errors?.required">Поле ИИН пустое</span>
       </div>
       <ion-item>
-        <ion-input type="text" placeholder="telephone" formControlName="telephone"></ion-input>
+        <ion-input type="text" placeholder="Введите номер телефона" formControlName="telephone"></ion-input>
       </ion-item>
 
       <div *ngIf="(telephone.dirty || telephone.touched) && telephone.errors" class="errors">
-        <span *ngIf="telephone.errors?.required">telephone пустое</span>
+        <span *ngIf="telephone.errors?.required">Поле номер телефона пустое</span>
       </div>
       <ion-item>
         <ion-input type="password" placeholder="Пароль" formControlName="password"></ion-input>
       </ion-item>
       <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
-        <span *ngIf="password.errors?.required">Пароль пустое</span>
+        <span *ngIf="password.errors?.required">Поле пароль пустое</span>
         <span *ngIf="password.errors?.minlength">Пароль должен состоять минимум из 6 символов</span>
       </div>
     </div>
