@@ -35,6 +35,7 @@
     "@ionic/angular": "^5.5.2",
     "@ionic/storage": "^3.0.6",
     "angular-md5": "^0.1.10",
+    "cors": "^2.8.5",
     "rxjs": "~6.6.0",
     "rxjs-compat": "^6.6.7",
     "ts-md5": "^1.2.9",
