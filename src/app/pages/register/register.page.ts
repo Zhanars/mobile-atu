@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthenticationService} from "../../services/authentication.service";
 import {AlertController, LoadingController} from "@ionic/angular";
 import {Router} from "@angular/router";
+import {RegistrationService} from "../../services/registration.service";
 
 @Component({
   selector: 'app-register',
@@ -13,7 +13,7 @@ export class RegisterPage implements OnInit {
   credentials: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private authService: AuthenticationService,
+              private RegService: RegistrationService,
               private alertController: AlertController,
               private router: Router,
               private loadingController: LoadingController) { }
@@ -27,7 +27,24 @@ export class RegisterPage implements OnInit {
       });
   }
   async register(){
+    const loading = await this.loadingController.create();
+    await loading.present();
 
+    this.RegService.register(this.credentials.value).subscribe(
+      async (res) => {
+        await loading.dismiss();
+        this.router.navigateByUrl('/tabs', { replaceUrl: true });
+      },
+      async (res) => {
+        await loading.dismiss();
+        const alert = await this.alertController.create({
+          header: 'Сервер недоступен. Попробуйте позже.',
+          message: res.text,
+          buttons: ['OK'],
+        });
+        await alert.present();
+      }
+    );
   }
   get email() {
     return this.credentials.get('email');
