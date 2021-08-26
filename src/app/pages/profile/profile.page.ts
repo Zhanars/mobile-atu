@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
+import {AuthenticationService} from "../../services/authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -8,9 +10,14 @@ import { NavController, NavParams } from '@ionic/angular';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit() {
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
 }
