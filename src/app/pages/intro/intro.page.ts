@@ -12,7 +12,9 @@ import { Storage } from '@capacitor/storage';
 export class IntroPage implements OnInit {
   @ViewChild(IonSlides)slides: IonSlides;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+
+  }
 
   ngOnInit() {
   }

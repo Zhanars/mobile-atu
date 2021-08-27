@@ -2,9 +2,23 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import {HttpHeaders} from "@angular/common/http";
+
 export const environment = {
   production: false
 };
+export const API_server_url = 'https://socket.atu.kz/api/';
+export const HOME_page_url = 'http://atu.edu.kz/';
+export const httpOptions = {
+  headers: new HttpHeaders({
+    'Accept': 'application/json',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  })
+};
+export class User{
+  constructor( public username:string, public iin:string, public email:string, public phone:string, public user_id:bigint) {
+  }
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

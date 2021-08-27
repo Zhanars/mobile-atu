@@ -16,7 +16,7 @@ dependencies {
     implementation project(':capacitor-storage')
 
 }
-
+apply from: "../../node_modules/cordova-plugin-qrscanner/src/android/qrscanner.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

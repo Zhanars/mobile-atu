@@ -5,6 +5,7 @@ import { AlertController, LoadingController } from '@ionic/angular'
 import { Router } from '@angular/router';
 import {Storage} from "@capacitor/storage";
 import {BehaviorSubject} from "rxjs";
+import {User} from "../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,14 @@ import {BehaviorSubject} from "rxjs";
 export class LoginPage implements OnInit {
   credentials: FormGroup;
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-
+  user: User | undefined;
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               private alertController: AlertController,
               private router: Router,
-              private loadingController: LoadingController) { }
+              private loadingController: LoadingController) {
+
+  }
 
   ngOnInit() {
     this.credentials = this.fb.group({
@@ -33,6 +36,7 @@ export class LoginPage implements OnInit {
 
     this.authService.login(this.credentials.value).subscribe(
       async (res) => {
+        console.log(res);
           const key_value = JSON.stringify(res);
           let b = JSON.parse(key_value);
           if (b.code == 1){
