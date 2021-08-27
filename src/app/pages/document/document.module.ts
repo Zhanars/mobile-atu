@@ -13,7 +13,9 @@ import { DocumentPage } from './document.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    DocumentPageRoutingModule
+    DocumentPageRoutingModule,
+    IonicModule,
+    IonicModule
   ],
   declarations: [DocumentPage]
 })
