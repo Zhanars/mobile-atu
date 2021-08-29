@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
+import {Storage} from "@capacitor/storage";
+import {INTRO_KEY} from "../../guards/intro.guard";
 
 @Component({
   selector: 'app-profile',
@@ -20,4 +22,8 @@ export class ProfilePage implements OnInit {
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
+  showIntro() {
+      Storage.set({key: INTRO_KEY, value: 'false'});
+    this.router.navigateByUrl('/', { replaceUrl: true });
+  }
 }
