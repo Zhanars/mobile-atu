@@ -11,5 +11,9 @@
     <param name="onload" value="true"/>
   </feature>
 
+  <feature name="Ftp">
+    <param name="android-package" value="io.github.xfally.cordova.plugin.ftp.CDVFtp"/>
+  </feature>
+
   
 </widget>

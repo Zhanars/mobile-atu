@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
     let alert = await this.alertController.create();
     this.authService.login(this.credentials.value).subscribe(
       async (res) => {
+        console.log(res);
         const key_value = JSON.stringify(res);
         let b = JSON.parse(key_value);
         if (b.code == '1'){
