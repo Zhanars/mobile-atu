@@ -1,8 +1,8 @@
 import { Component, Pipe, PipeTransform } from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {Router} from "@angular/router";
+import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 import { DomSanitizer} from '@angular/platform-browser';
-import {HOME_page_url} from "../../../environments/environment";
+import {HOME_page_url} from '../../../environments/environment';
 
 @Pipe({ name: 'safe' })
 

@@ -3,9 +3,9 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular'
 import { Router } from '@angular/router';
-import {Storage} from "@capacitor/storage";
 import {BehaviorSubject} from "rxjs";
-import {User} from "../../../environments/environment";
+import {Storage} from "@capacitor/storage";
+import {AUTH_TOKEN_KEY} from "../../../environments/environment";
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,6 @@ import {User} from "../../../environments/environment";
 export class LoginPage implements OnInit {
   credentials: FormGroup;
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
-  user: User | undefined;
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               private alertController: AlertController,
@@ -23,7 +22,6 @@ export class LoginPage implements OnInit {
               private loadingController: LoadingController) {
 
   }
-
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -31,43 +29,34 @@ export class LoginPage implements OnInit {
     });
   }
   async login() {
-    const loading = await this.loadingController.create();
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      duration: 2000,
+      spinner: "dots"
+    });
     await loading.present();
-
+    let alert = await this.alertController.create();
     this.authService.login(this.credentials.value).subscribe(
       async (res) => {
-        console.log(res);
-          const key_value = JSON.stringify(res);
-          let b = JSON.parse(key_value);
-          if (b.code == 1){
-            Storage.set({key: 'USER', value: key_value});
-            await loading.dismiss();
-            const alert = await this.alertController.create({
-              message: "Отлично",
-              buttons: ['OK'],
-            });
-            this.isAuthenticated.next(true);
-            this.router.navigateByUrl('/tabs', {replaceUrl: true});
-          } else {
-            await loading.dismiss();
-            const alert = await this.alertController.create({
-              message: "Email/пароль не правильно",
-              buttons: ['OK'],
-            });
-            this.isAuthenticated.next(false);
-            await alert.present();
-          }
+        const key_value = JSON.stringify(res);
+        let b = JSON.parse(key_value);
+        if (b.code == '1'){
+          Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(b.message)});
+          this.isAuthenticated.next(true);
+          this.router.navigateByUrl('/', {replaceUrl: true});
+        } else {
+          alert.message = "Email/пароль не правильно";
+          this.isAuthenticated.next(false);
+        }
       },
       async (res) => {
-        await loading.dismiss();
-        const alert = await this.alertController.create({
-          message: "Сервер недоступен, попробуйте позже'",
-          buttons: ['OK'],
-        });
+        alert.message = "Сервер недоступен, попробуйте позже";
         this.isAuthenticated.next(false);
-        await alert.present();
       }
     );
+    alert.buttons = ['OK'];
+    await loading.dismiss();
+    await alert.present();
   }
 
   // Easy access for form fields

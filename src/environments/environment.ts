@@ -8,7 +8,7 @@ export const environment = {
   production: false
 };
 export const API_server_url = 'https://socket.atu.kz/api/';
-export const HOME_page_url = 'https://atu.edu.kz/';
+export const HOME_page_url = '';
 export const httpOptions = {
   headers: new HttpHeaders({
     'Accept': 'application/json',
@@ -16,10 +16,10 @@ export const httpOptions = {
   })
 };
 export class User{
-  constructor( public username:string, public iin:string, public email:string, public phone:string, public user_id:bigint) {
+  constructor( public username:string, public iin:string, public email:string, public phone:string, public user_id:bigint, public sex: bigint) {
   }
 }
-
+export const AUTH_TOKEN_KEY = 'USER';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

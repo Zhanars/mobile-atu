@@ -16,7 +16,9 @@ export class RegisterPage implements OnInit {
               private RegService: RegistrationService,
               private alertController: AlertController,
               private router: Router,
-              private loadingController: LoadingController) { }
+              private loadingController: LoadingController) {
+
+  }
 
   ngOnInit() {
       this.credentials = this.fb.group({
@@ -36,8 +38,8 @@ export class RegisterPage implements OnInit {
           message: res.text,
           buttons: ['OK'],
         });
-        await alert.present();
         await loading.dismiss();
+        await alert.present();
         if (res.code == 11)
         this.router.navigateByUrl('/login', { replaceUrl: true });
       },
@@ -46,8 +48,8 @@ export class RegisterPage implements OnInit {
           message: 'Сервер недоступен, попробуйте позже',
           buttons: ['OK'],
         });
-        await alert.present();
         await loading.dismiss();
+        await alert.present();
       }
     );
   }
