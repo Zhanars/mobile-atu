@@ -36,7 +36,7 @@ export class LoginPage implements OnInit {
     });
     await loading.present();
     let alert = await this.alertController.create();
-    this.authService.login(this.credentials.value).subscribe(
+    await this.authService.login(this.credentials.value).subscribe(
       async (res) => {
         console.log(res);
         const key_value = JSON.stringify(res);
@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
     );
     await loading.dismiss();
     if (this.isAuthenticated.getValue()){
-      this.router.navigateByUrl('/', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs', { replaceUrl: true });
     }
   }
 
