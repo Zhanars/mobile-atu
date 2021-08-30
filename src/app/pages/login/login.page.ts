@@ -44,20 +44,24 @@ export class LoginPage implements OnInit {
         if (b.code == '1'){
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(b.message)});
           this.isAuthenticated.next(true);
-          this.router.navigateByUrl('/', {replaceUrl: true});
         } else {
           alert.message = "Email/пароль не правильно";
+          alert.buttons = ['OK'];
+          await alert.present();
           this.isAuthenticated.next(false);
         }
       },
       async (res) => {
         alert.message = "Сервер недоступен, попробуйте позже";
+        alert.buttons = ['OK'];
+        await alert.present();
         this.isAuthenticated.next(false);
       }
     );
-    alert.buttons = ['OK'];
     await loading.dismiss();
-    await alert.present();
+    if (this.isAuthenticated.getValue()){
+      this.router.navigateByUrl('/', { replaceUrl: true });
+    }
   }
 
   // Easy access for form fields

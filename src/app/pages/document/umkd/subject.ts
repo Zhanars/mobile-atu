@@ -4,6 +4,7 @@ export class Subject {
     public expanded:boolean,
     public files: {
       title:string,
+      teacher_name:string,
       href:string
     }){}
 }

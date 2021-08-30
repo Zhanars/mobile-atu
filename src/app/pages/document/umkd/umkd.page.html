@@ -20,7 +20,7 @@
     </ion-card-header>
     <ion-card-content>
       <app-expandable expandHeight="1500px" [expanded]="item.expanded" *ngFor="let file of item.files">
-        <p><a href="{{file.href}}" target="_blank" >{{file.title}} </a> </p>
+        <ion-card-subtitle><a href="{{file.href}}" target="_blank" >{{file.title}}</a> </ion-card-subtitle>
       </app-expandable>
     </ion-card-content>
   </ion-card>

@@ -15,9 +15,5 @@
     <param name="ios-package" value="CDVFtp"/>
   </feature>
 
-  <feature name="BarcodeScanner">
-    <param name="ios-package" value="CDVBarcodeScanner"/>
-  </feature>
-
   
 </widget>
