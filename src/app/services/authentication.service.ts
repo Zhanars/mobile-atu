@@ -27,7 +27,7 @@ export class AuthenticationService{
       this.token = JSON.parse(token.value);
       this.isAuthenticated.next(true);
     } else {
-      this.isAuthenticated.next(false);
+      this.isAuthenticated.next(true);
     }
   }
 
