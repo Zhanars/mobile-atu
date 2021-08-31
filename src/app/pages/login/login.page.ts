@@ -60,7 +60,11 @@ export class LoginPage implements OnInit {
     );
     await loading.dismiss();
     if (this.isAuthenticated.getValue()){
-      this.router.navigateByUrl('/tabs', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs').then(
+        () => {
+          window.location.reload();
+        }
+      );
     }
   }
 
