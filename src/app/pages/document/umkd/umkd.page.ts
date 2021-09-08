@@ -35,7 +35,6 @@ export class UmkdPage{
     }
   }
   async loadData() {
-      // Первоначальные значения переменных
       let loadingPopup = await this.loadingCtrl.create({
         message: ""
       });
@@ -55,15 +54,11 @@ export class UmkdPage{
         },
       )
       loadingPopup.dismiss();
-
   }
-  // Выполняется при потягивании списка вниз, когда список находится в верхнем положении
   doRefresh(refresher) {
     this.loadData();
     setTimeout(() => {
       refresher.complete();
     }, 2000);
   }
-
-
 }

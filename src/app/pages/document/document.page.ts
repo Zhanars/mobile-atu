@@ -22,6 +22,7 @@ export class DocumentPage implements OnInit {
     const fdate = new Date();
     const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
     this.transcript_url = API_server_url + 'document/transcript/?key=' + md5.appendStr(realDate).end() + "&iin=" + iin + '&dt=' + realDate;
+
   }
   ngOnInit() {
   }
