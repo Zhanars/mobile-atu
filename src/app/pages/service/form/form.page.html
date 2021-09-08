@@ -29,7 +29,7 @@
             <ion-select-option value="m">3</ion-select-option>
             <ion-select-option value="f">4</ion-select-option>
             <ion-select-option value="m">5</ion-select-option>
-           </ion-select>
+          </ion-select>
         </ion-item>
 
         <ion-item class="ion-margin-bottom">
@@ -78,7 +78,7 @@
           <small *ngIf="(form.get('phone')).errors?.required">Name is required</small>
           <!--question mark(?) is a safe navigation operator-->
           <small *ngIf="(form.get('phone')).errors?.pattern">Не корректный номер телефона</small>
-          </small>
+        </small>
 
         <ion-item class="ion-margin-bottom">
           <ion-label position="floating">ИИН</ion-label>
@@ -129,25 +129,38 @@
         </ion-item>
 
         <ion-item class="ion-margin-bottom">
+          <ion-grid>
 
-        </ion-item>
+            <ion-row>
+              <ion-col size="6">
+                <ion-button (click)="takePhoto()" color="danger" expand="full" shape="round" size="large" type="button">
+                  <ion-icon  name="camera"></ion-icon>
+                </ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button (click)="selectPhoto()" color="secondary" expand="full" shape="round" size="large" type="button">
+                  <ion-icon name="image"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
 
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Password</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
-        </ion-item>
-        <small *ngIf="form.get('password').invalid && (form.get('password').dirty ||form.get('password').touched )">
-          Password is required.
-        </small>
+            <ion-row>
+              <ion-col size="12">
+                <ion-text color="danger">
+                  <strong>{{error}}</strong>
+                </ion-text>
+              </ion-col>
+            </ion-row>
 
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Confirm Password</ion-label>
-          <ion-input type="password" formControlName="confirmPassword"></ion-input>
+            <ion-row>
+              <ion-col  size="12">
+                <img formControlName="image" *ngIf="photo" [src]="photo"/>
+                <ion-input type="text" formControlName="city"></ion-input>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
         </ion-item>
-        <small
-          *ngIf="form.get('confirmPassword').invalid && (form.get('confirmPassword').dirty ||form.get('confirmPassword').touched )">
-          Confirm password is required.
-        </small>
 
         <ion-item class="ion-float-right" lines="none">
           <ion-button color="primary" [disabled]="!form.valid" type="submit">Save Details</ion-button>
