@@ -4,12 +4,12 @@ import {Plugins} from '@capacitor/core';
 import { Platform, ActionSheetController } from '@ionic/angular';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
-import {Camera, CameraResultType, CameraSource} from '@capacitor/camera';
 import {DomSanitizer, SafeResourceUrl, SafeValue} from '@angular/platform-browser';
 import {environment, httpOptions} from '../../../../environments/environment';
 import {catchError, finalize} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {Upload} from 'tus-js-client';
+import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 
 
 @Component({
@@ -40,15 +40,24 @@ export class FormPage {
               private readonly loadingCtrl: LoadingController,
               private readonly toastCtrl: ToastController) {
     this.form = this.fb.group({
+      dfaculty: [null, [Validators.required]],
+      course: [null, [Validators.required]],
+      national: [null, [Validators.required]],
+      gender: [null, [Validators.required]],
+      groupname: [null, [Validators.required]],
       lastname: [null, [Validators.required, Validators.minLength(5)]],
       name: [null, [Validators.required, Validators.minLength(5)]],
       secondname: [null, [Validators.required, Validators.minLength(5)]],
       iin: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(12), Validators.pattern(/^[0-9]\d*$/)]],
       phone: [null, [Validators.required, Validators.pattern(/^[0-9]\d*$/)]],
+      city: [null, [Validators.required]],
+      district: [null, [Validators.required]],
+      region: [null, [Validators.required]],
       dob: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       image:[this.blobtext]
     });
+    console.log('log');
   }
   saveDetails() {
     this.submitted = true;
@@ -175,6 +184,18 @@ export class FormPage {
     const errMsg = error.message ? error.message : error.toString();
     this.error = errMsg;
     return throwError(errMsg);
+  }
+  get dfaculty() {
+    return this.form.get('dfaculty');
+  }
+  get course() {
+    return this.form.get('course');
+  }
+  get national() {
+    return this.form.get('national');
+  }
+  get gender() {
+    return this.form.get('gender');
   }
 
 
