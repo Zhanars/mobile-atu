@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-service',
@@ -7,11 +8,13 @@ import { NavController, NavParams } from '@ionic/angular';
   styleUrls: ['./service.page.scss'],
 })
 export class ServicePage implements OnInit {
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
   }
+
+
 
 
   public searchService() {
