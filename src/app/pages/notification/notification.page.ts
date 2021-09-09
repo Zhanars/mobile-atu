@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-notification',
@@ -8,7 +7,8 @@ import { NavController, NavParams } from '@ionic/angular';
 })
 export class NotificationPage implements OnInit {
 
-  constructor() { }
+  constructor( ) {
+  }
 
   ngOnInit() {
   }
