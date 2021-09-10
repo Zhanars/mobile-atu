@@ -35,15 +35,15 @@ export class FormPage {
     formControlName: string;
     label: string;
   }[];
-  formSelects: {
+  formSelects: Array<{
     formControlName: string;
     label: string;
     placeholder: string;
-    options:{
+    options:Array<{
       id: string;
       value: string;
-    }
-  }[];
+    }>
+  }> = [];
   constructor(private fb: FormBuilder, plt: Platform,private readonly http: HttpClient,
               private readonly sanitizer: DomSanitizer,
               private readonly loadingCtrl: LoadingController,
@@ -88,8 +88,8 @@ export class FormPage {
         this.items = data;
       },
     )*/
-    let options = {id: '1', value: 'sadsad'};
-    let dataS = {formControlName: 'dfaculty', label: 'Декан факультета', placeholder: 'Выберите', options: options};
+    let options = [{id: '1', value: 'sadsad'}, {id: '2', value: 'daweewewewew'}];
+    let dataS = {formControlName: 'dfaculty', label: 'Декан факультета', placeholder: 'Выберите', options: Array.from(options)};
     this.formSelects.push(dataS);
     loadingPopup.dismiss();
 

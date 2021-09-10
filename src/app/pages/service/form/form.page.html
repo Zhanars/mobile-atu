@@ -24,15 +24,11 @@
           </ion-select>
         </ion-item>
 
-        <ion-item *ngFor="let arrayItem of formSelects;"
-             class="ion-margin-bottom">
+        <ion-item *ngFor="let arrayItem of formSelects" class="ion-margin-bottom">
           <ion-label position="floating">{{arrayItem.label}}</ion-label>
-          <ion-select *ngFor="let optionItem of arrayItem.options;" formControlName="{{arrayItem.formControlName}}"
-                      placeholder="{{arrayItem.placeholder}}">
-            <ion-select-option value="{{optionItem.id}}">{{optionItem.value}}</ion-select-option>
-
+          <ion-select  formControlName="{{arrayItem.formControlName}}" placeholder="{{arrayItem.placeholder}}">
+            <ion-select-option *ngFor="let optionItem of arrayItem.options" value="{{optionItem.id}}">{{optionItem.value}}</ion-select-option>
           </ion-select>
-
         </ion-item>
         <ion-item class="ion-margin-bottom">
           <ion-label position="floating">Курс</ion-label>
