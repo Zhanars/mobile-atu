@@ -1,15 +1,17 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, ElementRef} from '@angular/core';
-import {Plugins} from '@capacitor/core';
-import { Platform, ActionSheetController } from '@ionic/angular';
+import { Component} from '@angular/core';
+import {Platform, NavParams} from '@ionic/angular';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer, SafeResourceUrl, SafeValue} from '@angular/platform-browser';
-import {environment, httpOptions} from '../../../../environments/environment';
-import {catchError, finalize} from 'rxjs/operators';
+import {API_server_url, AUTH_TOKEN_KEY, environment, httpOptions} from '../../../../environments/environment';
+import {catchError, finalize, map} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {Upload} from 'tus-js-client';
 import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
+import {ActivatedRoute} from "@angular/router";
+import {Storage} from "@capacitor/storage";
+import {Md5} from "ts-md5";
 
 
 @Component({
@@ -17,10 +19,8 @@ import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
 })
-
-
-
 export class FormPage {
+  sub: any;
   public tus = false;
   public error: string | null = null;
   photo: SafeResourceUrl | null = null;
@@ -28,17 +28,27 @@ export class FormPage {
   conblob: string;
   private counter = 0;
   private loading: HTMLIonLoadingElement | null = null;
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   form: FormGroup;
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   submitted = false;
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   albums = [];
-
+  formInputs: {
+    formControlName: string;
+    label: string;
+  }[];
+  formSelects: {
+    formControlName: string;
+    label: string;
+    placeholder: string;
+    options:{
+      id: string;
+      value: string;
+    }
+  }[];
   constructor(private fb: FormBuilder, plt: Platform,private readonly http: HttpClient,
               private readonly sanitizer: DomSanitizer,
               private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController) {
+              private readonly toastCtrl: ToastController,
+              private route: ActivatedRoute) {
     this.form = this.fb.group({
       dfaculty: [null, [Validators.required]],
       course: [null, [Validators.required]],
@@ -57,7 +67,34 @@ export class FormPage {
       email: [null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       image:[this.blobtext]
     });
-    console.log('log');
+    const routeParams = this.route.snapshot.paramMap;
+    const form_id = Number(routeParams.get('productId'));
+    this.loadData(form_id);
+  }
+  async loadData(form_id: number) {
+    let loadingPopup = await this.loadingCtrl.create({
+      message: ""
+    });
+    loadingPopup.present();
+    const token = await Storage.get({key: AUTH_TOKEN_KEY});
+    const val = JSON.parse(token.value);
+    const md5 = new Md5();
+    const fdate = new Date();
+    const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
+    const urlstring = API_server_url + 'service/get/?key=' + md5.appendStr(realDate).end() + "&form_id=" + form_id;
+    console.log(urlstring);
+    /*this.http.get(urlstring).subscribe(
+      (data:any)=> {
+        this.items = data;
+      },
+    )*/
+    let options = {id: '1', value: 'sadsad'};
+    let dataS = {formControlName: 'dfaculty', label: 'Декан факультета', placeholder: 'Выберите', options: options};
+    this.formSelects.push(dataS);
+    loadingPopup.dismiss();
+
+  }
+  ngOnInit() {
   }
   saveDetails() {
     this.submitted = true;

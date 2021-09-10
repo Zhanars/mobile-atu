@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { FormPageRoutingModule } from './form-routing.module';
 
 import { FormPage } from './form.page';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   imports: [
