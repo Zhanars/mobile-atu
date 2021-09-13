@@ -9,167 +9,24 @@
 
 <ion-content>
   <div class="ion-padding">
-    <form [formGroup]="form" (ngSubmit)="saveDetails()">
-      <ion-list>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Декан факультета</ion-label>
-          <ion-select placeholder="Выберите" formControlName="dfaculty">
-            <ion-select-option value="m">Пищевых технологий</ion-select-option>
-            <ion-select-option value="f">Дизайна технологий текстиля и одежды</ion-select-option>
-            <ion-select-option value="m">Инжиниринга и информационных технологий</ion-select-option>
-            <ion-select-option value="f">Экономики и бизнеса </ion-select-option>
-            <ion-select-option value="m">ТЭК</ion-select-option>
-            <ion-select-option value="m">Управление послевузовского образования</ion-select-option>
-          </ion-select>
+    <form (ngSubmit)="sendData()" [formGroup]="formG">
+        <ion-item *ngFor="let item of formInputs" [ngClass]="{'has-error': formG.controls[item[0].control_name].errors}" class="ion-margin-bottom">
+          <ion-label position="floating">{{item[0].input_label}}</ion-label>
+          <ion-input formControlName="{{item[0].control_name}}" type="{{item[0].input_type}}"></ion-input>
         </ion-item>
 
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Курс</ion-label>
-          <ion-select placeholder="Выберите" formControlName="course">
-            <ion-select-option value="m">1</ion-select-option>
-            <ion-select-option value="f">2</ion-select-option>
-            <ion-select-option value="m">3</ion-select-option>
-            <ion-select-option value="f">4</ion-select-option>
-            <ion-select-option value="m">5</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Национальность</ion-label>
-          <ion-select placeholder="Выберите" formControlName="national">
-            <ion-select-option value="m">казах/казашка</ion-select-option>
-            <ion-select-option value="f">русский/русская</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Пол</ion-label>
-          <ion-select placeholder="Выберите" formControlName="gender">
-            <ion-select-option value="m">мужской</ion-select-option>
-            <ion-select-option value="f">женский</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Название группы</ion-label>
-          <ion-input type="text" formControlName="groupname"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Фамилия</ion-label>
-          <ion-input type="text" formControlName="lastname"></ion-input>
-        </ion-item>
-
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Имя</ion-label>
-          <ion-input type="text" formControlName="name"></ion-input>
-        </ion-item>
-
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Отчество</ion-label>
-          <ion-input type="text" formControlName="secondname"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Номер телефона</ion-label>
-          <ion-input type="text" formControlName="phone"></ion-input>
-        </ion-item>
-        <small *ngIf="form.get('phone').invalid && (form.get('phone').dirty ||form.get('phone').touched )">
-          <small *ngIf="(form.get('phone')).errors?.required">Name is required</small>
-          <!--question mark(?) is a safe navigation operator-->
-          <small *ngIf="(form.get('phone')).errors?.pattern">Не корректный номер телефона</small>
-        </small>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">ИИН</ion-label>
-          <ion-input type="text" formControlName="iin"></ion-input>
-        </ion-item>
-        <small *ngIf="form.get('iin').invalid && (form.get('iin').dirty ||form.get('iin').touched )">
-          <small *ngIf="(form.get('iin')).errors?.required">Name is required</small>
-          <!--question mark(?) is a safe navigation operator-->
-          <small *ngIf="(form.get('iin')).errors?.minlength">Не корректный ИИН</small>
-          <small *ngIf="(form.get('iin')).errors?.pattern">Не корректный ИИН</small>
-        </small>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" formControlName="email"></ion-input>
-        </ion-item>
-
-        <div *ngIf="(form.get('email').invalid && (form.get('email')).touched) || (form.get('email')).dirty">
-          <small *ngIf="(form.get('email')).errors?.required">Email is required</small>
-          <!--question mark(?) is a safe navigation operator-->
-          <small *ngIf="(form.get('email')).errors?.pattern">Please provide a valid email address</small>
-        </div>
-
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Дата рождения</ion-label>
-          <ion-datetime formControlName="dob" displayFormat="MM/DD/YYYY" min="1994-03-14" max="2022-12-09">
-          </ion-datetime>
-        </ion-item>
-
-        <small *ngIf="form.get('dob').invalid && (form.get('dob').dirty ||form.get('dob').touched )">
-          DOB is required.
-        </small>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Город</ion-label>
-          <ion-input type="text" formControlName="city"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Район</ion-label>
-          <ion-input type="text" formControlName="district"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-label position="floating">Область</ion-label>
-          <ion-input type="text" formControlName="region"></ion-input>
-        </ion-item>
-
-        <ion-item class="ion-margin-bottom">
-          <ion-grid>
-
-            <ion-row>
-              <ion-col size="6">
-                <ion-button (click)="takePhoto()" color="danger" expand="full" shape="round" size="large" type="button">
-                  <ion-icon  name="camera"></ion-icon>
-                </ion-button>
-              </ion-col>
-              <ion-col size="6">
-                <ion-button (click)="selectPhoto()" color="secondary" expand="full" shape="round" size="large" type="button">
-                  <ion-icon name="image"></ion-icon>
-                </ion-button>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col size="12">
-                <ion-text color="danger">
-                  <strong>{{error}}</strong>
-                </ion-text>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col  size="12">
-                <img formControlName="image" *ngIf="photo" [src]="photo"/>
-                <ion-input type="text" formControlName="image"></ion-input>
-              </ion-col>
-            </ion-row>
-
-          </ion-grid>
-        </ion-item>
+      <ion-item *ngFor="let arrayItem of formSelects" [ngClass]="{'has-error': formG.controls[arrayItem[0].control_name].errors}" class="ion-margin-bottom">
+        <ion-label position="floating">{{arrayItem[0].select_label}}</ion-label>
+        <ion-select  formControlName="{{arrayItem[0].control_name}}" placeholder="{{arrayItem[0].select_placeholder}}">
+          <ion-select-option *ngFor="let optionItem of arrayItem[0].select_options" value="{{optionItem.id}}">{{optionItem.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
         <ion-item class="ion-float-right" lines="none">
-          <ion-button color="primary" [disabled]="!form.valid" type="submit">Save Details</ion-button>
-          <ion-button color="primary" (click)="onReset()">Reset Form</ion-button>
+          <ion-button color="primary" type="submit">Отправить</ion-button>
         </ion-item>
-      </ion-list>
     </form>
+
+
   </div>
 </ion-content>

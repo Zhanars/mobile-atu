@@ -21,65 +21,11 @@
 <ion-content [fullscreen]="true">
   <ion-list>
 
-    <ion-item button routerLink="form" routerLinkActive="active" >
+    <ion-item [routerLink]="['form',  item.service_id ]" routerLinkActive="active" *ngFor="let item of items">
       <ion-label>
-        Заявление на заселении в общежитии
+        {{item.service_label}}
       </ion-label>
     </ion-item>
-    <ion-item button href="https://hostel.atu.kz/?page=reg_transition">
-      <ion-label>
-        Заявление на переселение из одного общежития в другое
-      </ion-label>
-    </ion-item>
-<!--    <ion-item button (click)="buttonClick()">-->
-<!--      <ion-label>-->
-<!--        Заявление на присуждение гранта-->
-<!--      </ion-label>-->
-<!--    </ion-item>-->
-    <ion-item button href="https://turniket.atu.kz/grant/">
-      <ion-label>
-        Получение обходного листа
-      </ion-label>
-    </ion-item>
-
-    <ion-item button href="https://turniket.atu.kz/grant/statement.php">
-      <ion-label>
-        Заявление на присуждение гранта
-      </ion-label>
-    </ion-item>
-
-    <ion-item button href="https://register.atu.kz/%d0%b2%d0%b8%d1%80%d1%82%d1%83%d0%b0%d0%bb%d1%8c%d0%bd%d1%8b%d0%b9-%d0%be%d1%84%d0%b8%d1%81-%d1%80%d0%b5%d0%b3%d0%b8%d1%81%d1%82%d1%80%d0%b0%d1%82%d0%be%d1%80%d0%b0/">
-      <ion-label>
-        Виртуальный офис-регистратора
-      </ion-label>
-    </ion-item>
-
-    <ion-item button href="https://register.atu.kz/%d0%b2%d0%b8%d1%80%d1%82%d1%83%d0%b0%d0%bb%d1%8c%d0%bd%d1%8b%d0%b9-%d0%b4%d0%b5%d0%ba%d0%b0%d0%bd%d0%b0%d1%82/">
-      <ion-label>
-        Виртуальный деканат
-      </ion-label>
-    </ion-item>
-
-    <ion-item button href="https://register.atu.kz/">
-      <ion-label>
-        Заявка для представления справки в военкомат
-      </ion-label>
-    </ion-item>
-
-    <ion-item button href="https://register.atu.kz/">
-      <ion-label>
-        Прочие услуги
-      </ion-label>
-    </ion-item>
-
-
-    <ion-item button href="https://register.atu.kz/">
-      <ion-label>
-        Виртуальный тур
-      </ion-label>
-    </ion-item>
-
-
   </ion-list>
 
 </ion-content>
