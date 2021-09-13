@@ -8,10 +8,9 @@
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
     <form (ngSubmit)="sendData()" [formGroup]="formG">
         <ion-item *ngFor="let item of formInputs" [ngClass]="{'has-error': formG.controls[item[0].control_name].errors}" class="ion-margin-bottom">
-          <ion-label position="floating">{{item[0].input_label}}</ion-label>
+          <ion-label position="stacked">{{item[0].input_label}}</ion-label>
           <ion-input formControlName="{{item[0].control_name}}" type="{{item[0].input_type}}"></ion-input>
         </ion-item>
 
@@ -21,12 +20,11 @@
           <ion-select-option *ngFor="let optionItem of arrayItem[0].select_options" value="{{optionItem.id}}">{{optionItem.value}}</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-item *ngFor="let item of formFiles" [ngClass]="{'has-error': formG.controls[item[0].control_name].errors}" class="ion-margin-bottom">
+        <ion-label position="stacked">{{item[0].file_label}}</ion-label>
+        <ion-input (change)="uploadFile($event, item[0].control_name) " accept="{{item[0].file_accept}}" formControlName="{{item[0].control_name}}" type="file"></ion-input>
+      </ion-item>
 
-        <ion-item class="ion-float-right" lines="none">
-          <ion-button color="primary" type="submit">Отправить</ion-button>
-        </ion-item>
+      <ion-button [disabled]="formG.invalid" color="primary" expand="block" type="submit">Отправить</ion-button>
     </form>
-
-
-  </div>
 </ion-content>

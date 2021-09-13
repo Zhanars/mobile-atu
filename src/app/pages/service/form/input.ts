@@ -7,6 +7,15 @@ export class Array_inputs {
     public input_validation: string
   ){}
 }
+export class Array_File_Inputs {
+  constructor(
+    public file_label: string,
+    public file_accept: string,
+    public control_name: string,
+    public input_value: string,
+    public input_validation: string
+  ){}
+}
 export class Array_selects {
   constructor(
     public select_label: string,
