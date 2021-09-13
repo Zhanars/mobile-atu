@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Md5} from 'ts-md5/dist/md5';
+import {HttpClient} from '@angular/common/http';
 import {API_server_url, httpOptions} from "../../environments/environment";
 import {GenerateURLtokenService} from "./generate-urltoken.service";
 

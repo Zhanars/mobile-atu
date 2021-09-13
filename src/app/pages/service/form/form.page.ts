@@ -1,20 +1,18 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, Input} from '@angular/core';
-import {Platform, NavParams, AlertController} from '@ionic/angular';
+import {Platform, AlertController} from '@ionic/angular';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer, SafeResourceUrl, SafeValue} from '@angular/platform-browser';
-import {API_server_url, AUTH_TOKEN_KEY, environment, httpOptions} from '../../../../environments/environment';
+import { AUTH_TOKEN_KEY } from '../../../../environments/environment';
 import {catchError, finalize, map} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {Upload} from 'tus-js-client';
 import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 import {ActivatedRoute} from "@angular/router";
 import {Storage} from "@capacitor/storage";
-import {Md5} from "ts-md5";
-import {Array_inputs, Array_selects} from "./input";
-import {ValidationService} from "../../../services/validation.service";
-import {GenerateURLtokenService} from "../../../services/generate-urltoken.service";
+import {Array_File_Inputs, Array_inputs, Array_selects} from "./input";
+import {SendServiceDataService} from "../../../services/send-service-data.service";
 
 
 @Component({
@@ -36,12 +34,10 @@ export class FormPage {
   submitted = false;
   albums = [];
   form_id: number;
+  formData = new FormData();
   public formInputs: Array_inputs[] = [];
   public formSelects: Array_selects[] = [];
-  formFile: Array<{
-    formControlName: string;
-    label: string;
-  }> = [];
+  public formFiles: Array_File_Inputs[] = [];
   @Input() control: FormControl;
   constructor(public fb: FormBuilder,
               public plt: Platform,
@@ -50,6 +46,7 @@ export class FormPage {
               public loadingCtrl: LoadingController,
               private readonly toastCtrl: ToastController,
               private alertController: AlertController,
+              private serviceDataService: SendServiceDataService,
               private route: ActivatedRoute) {
     const routeParams = this.route.snapshot.paramMap;
     this.form_id = Number(routeParams.get('productId'));
@@ -62,15 +59,15 @@ export class FormPage {
     loadingPopup.present();
     const token = await Storage.get({key: AUTH_TOKEN_KEY});
     this.userData = JSON.parse(token.value);
-    console.log(this.userData);
-    const urlstring = API_server_url + 'services/forms/?key=' + GenerateURLtokenService.getKey() + "&form_id=" + this.form_id;
-    console.log(urlstring);
-    this.http.get(urlstring).subscribe(
+    this.serviceDataService.getFormElements(String(this.form_id)).subscribe(
       (data:any) => {
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
+        this.setupForm(data.array_file);
+        if (data.array_file.length > 0) this.formG.addControl('avatar', this.fb.control(null, Validators.required));
         this.formInputs = data.array_input;
         this.formSelects = data.array_select;
+        this.formFiles = data.array_file;
       },
     );
     loadingPopup.dismiss();
@@ -79,6 +76,7 @@ export class FormPage {
   ngOnInit() {
     this.loadData();
     console.log(this.formG.controls);
+    this.serviceDataService.testSend();
   }
   get value() {
     return this.formG.getRawValue();
@@ -101,9 +99,12 @@ export class FormPage {
   async sendData() {
     const loading = await this.loadingCtrl.create();
     await loading.present();
-    const urlstring = API_server_url + 'services/form/insert.php?key=' +  GenerateURLtokenService.getKey() + '&select_id=' + this.form_id;
-    this.http.post(urlstring, new URLSearchParams(this.formG.value), httpOptions).subscribe(
+    Object.keys(this.formG.controls).forEach(key => {
+      this.formData.append(key, this.formG.controls[key].value);
+    });
+    this.serviceDataService.sendFile(this.formData, String(this.form_id)).subscribe(
       async (res) => {
+        console.log(res);
         const alert = await this.alertController.create({
           message: "Заявка отправлена на рассмотрение",
           buttons: ['OK'],
@@ -112,14 +113,27 @@ export class FormPage {
         await alert.present();
       },
       async (res) => {
+
+        console.log(res);
         const alert = await this.alertController.create({
           message: 'Сервер недоступен, попробуйте позже',
           buttons: ['OK'],
         });
-        await loading.dismiss();
         await alert.present();
       }
     );
+    await loading.dismiss();
+  }
+
+  uploadFile(event, control_name) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.formG.patchValue({
+        avatar: file
+      });
+    }
+    this.formG.get('avatar').updateValueAndValidity();
+    this.formData.append(control_name, this.formG.controls['avatar'].value);
   }
 }
 
