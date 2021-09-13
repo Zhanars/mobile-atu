@@ -3,7 +3,8 @@ export class Array_inputs {
     public input_label: string,
     public control_name: string,
     public input_type: string,
-    public input_value: string
+    public input_value: string,
+    public input_validation: string
   ){}
 }
 export class Array_selects {
@@ -15,6 +16,7 @@ export class Array_selects {
       id: string;
       value: string;
     }>,
+    public input_value: string,
     public input_validation: string
   ){}
 }

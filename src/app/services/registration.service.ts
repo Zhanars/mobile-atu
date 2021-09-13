@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Md5} from 'ts-md5/dist/md5';
 import {API_server_url, httpOptions} from "../../environments/environment";
+import {GenerateURLtokenService} from "./generate-urltoken.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,7 @@ export class RegistrationService {
 
 
   register(credentials: {email, iin, tel, password}): Observable<any> {
-    const md5 = new Md5();
-    const fdate = new Date();
-    const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
-    const urlstring = API_server_url + 'users/insert.php?key=' + md5.appendStr(realDate).end();
+    const urlstring = API_server_url + 'users/insert.php?key=' +  GenerateURLtokenService.getKey();
     return this.http.post(urlstring, new URLSearchParams(credentials), httpOptions);
   }
 }

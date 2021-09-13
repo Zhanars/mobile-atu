@@ -1,3 +1,4 @@
+/*
 import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 import {httpOptions} from "../../../../environments/environment";
 import {catchError, finalize} from "rxjs/operators";
@@ -299,12 +300,7 @@ private handleError(error: any): Observable<never> {
 
 
 
-<ion-item *ngFor="let arrayItem of formSelects" class="ion-margin-bottom">
-  <ion-label position="floating">{{arrayItem.label}}</ion-label>
-<ion-select  formControlName="{{arrayItem.formControlName}}" placeholder="{{arrayItem.placeholder}}">
-<ion-select-option *ngFor="let optionItem of arrayItem.options" value="{{optionItem.id}}">{{optionItem.value}}</ion-select-option>
-</ion-select>
-</ion-item>
+
 
 
 
@@ -338,3 +334,4 @@ this.form = this.fb.group({
 
 
 
+*/

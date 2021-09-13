@@ -9,16 +9,21 @@
 
 <ion-content>
   <div class="ion-padding">
-    <form [formGroup]="formG" (ngSubmit)="saveDetails()">
-        <ion-item class="ion-margin-bottom" *ngFor="let item of formInputs" [ngClass]="{'has-error': formG.controls[item.control_name].errors}">
-          <ion-label >{{item.input_label}}</ion-label>
-          <ion-input type="{{item.input_type}}" formControlName="{{item.control_name}}">{{item.control_name}}</ion-input>
+    <form (ngSubmit)="sendData()" [formGroup]="formG">
+        <ion-item *ngFor="let item of formInputs" [ngClass]="{'has-error': formG.controls[item[0].control_name].errors}" class="ion-margin-bottom">
+          <ion-label position="floating">{{item[0].input_label}}</ion-label>
+          <ion-input formControlName="{{item[0].control_name}}" type="{{item[0].input_type}}"></ion-input>
         </ion-item>
 
+      <ion-item *ngFor="let arrayItem of formSelects" [ngClass]="{'has-error': formG.controls[arrayItem[0].control_name].errors}" class="ion-margin-bottom">
+        <ion-label position="floating">{{arrayItem[0].select_label}}</ion-label>
+        <ion-select  formControlName="{{arrayItem[0].control_name}}" placeholder="{{arrayItem[0].select_placeholder}}">
+          <ion-select-option *ngFor="let optionItem of arrayItem[0].select_options" value="{{optionItem.id}}">{{optionItem.value}}</ion-select-option>
+        </ion-select>
+      </ion-item>
 
         <ion-item class="ion-float-right" lines="none">
-          <ion-button color="primary"  type="submit">Save Details</ion-button>
-          <ion-button color="primary" (click)="onReset()">Reset Form</ion-button>
+          <ion-button color="primary" type="submit">Отправить</ion-button>
         </ion-item>
     </form>
 
