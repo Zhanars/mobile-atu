@@ -4,14 +4,16 @@ import {Router} from '@angular/router';
 import { DomSanitizer} from '@angular/platform-browser';
 import {HOME_page_url, httpOptions} from '../../../environments/environment';
 import {
-  ActionPerformed,
-  PushNotificationSchema,
+  PushNotification,
+  PushNotificationActionPerformed,
   PushNotifications,
-  Token, PushNotification, PushNotificationActionPerformed, PushNotificationToken,
+  Token
 } from '@capacitor/push-notifications';
-import {SendServiceDataService} from "../../services/send-service-data.service";
-import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
-import {HttpClient} from "@angular/common/http";
+import {SendServiceDataService} from '../../services/send-service-data.service';
+import {GenerateURLtokenService} from '../../services/generate-urltoken.service';
+import {HttpClient} from '@angular/common/http';
+import {IonAlertService} from "../../services/ion-alert.service";
+
 
 
 @Pipe({ name: 'safe' })
@@ -30,8 +32,8 @@ export class SafePipe implements PipeTransform {
 export class HomePage implements OnInit{
 
   home_page_url;
-  constructor(private authService: AuthenticationService, private router: Router, private domSanitizer : DomSanitizer,
-              private serviceDataService: SendServiceDataService,private http: HttpClient) {
+  constructor(private authService: AuthenticationService, private router: Router, private domSanitizer: DomSanitizer,
+              private serviceDataService: SendServiceDataService,private http: HttpClient,private ionAlertService: IonAlertService) {
     this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url);
   }
   ngOnInit() {
@@ -47,13 +49,23 @@ export class HomePage implements OnInit{
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration',
       (token: Token) => {
-
-        console.log(token.value);
-        const urlstring = 'https://3b32-37-228-66-82.ngrok.io/token/?key=' + GenerateURLtokenService.getKey();
-        this.http.post(urlstring, new URLSearchParams({'token': 'dsadsadsadsadsad'}), httpOptions).subscribe(
+        const urlstring = 'https://socket.atu.kz/api/notification/?key=' + GenerateURLtokenService.getKey();
+        this.http.post(urlstring, new URLSearchParams({token: token.value}), httpOptions).subscribe(
           (response) => console.log(response),
           (error) => console.log(error)
         );
+      }
+    );
+
+       PushNotifications.addListener('pushNotificationActionPerformed',
+      (notification: PushNotificationActionPerformed) => {
+        this.router.navigateByUrl('/tabs/notification', { replaceUrl:true });
+      }
+    );
+
+    PushNotifications.addListener('pushNotificationReceived',
+      (notification: PushNotification) => {
+        this.ionAlertService.showConfirm('Вам пришло сообщение', notification.body, 'tabs/notification','Перейти','Скрыть');
       }
     );
   }
