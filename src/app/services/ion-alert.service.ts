@@ -9,7 +9,7 @@ export class IonAlertService {
 
   constructor(public alertController: AlertController, private router: Router) { }
 
-  showAlert(header, text, url) {
+  showAlert(header, text, url = '') {
     this.alertController.create({
       header: header,
       message: text,
