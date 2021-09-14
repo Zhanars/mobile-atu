@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AlertController, LoadingController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {RegistrationService} from "../../services/registration.service";
+import {IonLoaderService} from "../../services/ion-loader.service";
+import {IonAlertService} from "../../services/ion-alert.service";
 
 @Component({
   selector: 'app-register',
@@ -14,9 +15,9 @@ export class RegisterPage implements OnInit {
 
   constructor(private fb: FormBuilder,
               private RegService: RegistrationService,
-              private alertController: AlertController,
-              private router: Router,
-              private loadingController: LoadingController) {
+              public ionLoaderService: IonLoaderService,
+              private ionAlertService: IonAlertService,
+              private router: Router) {
 
   }
 
@@ -28,28 +29,18 @@ export class RegisterPage implements OnInit {
         tel: ['', [Validators.required, Validators.pattern('[- +()0-9]+')]],
       });
   }
-  async register(){
-    const loading = await this.loadingController.create();
-    await loading.present();
-
+  register(){
+    this.ionLoaderService.customLoader();
     this.RegService.register(this.credentials.value).subscribe(
-      async (res) => {
-        const alert = await this.alertController.create({
-          message: res.text,
-          buttons: ['OK'],
-        });
-        await loading.dismiss();
-        await alert.present();
+      res => {
+        this.ionLoaderService.dismissLoader();
+        this.ionAlertService.showAlert('Ошибка', res.text, '');
         if (res.code == 11)
         this.router.navigateByUrl('/login', { replaceUrl: true });
       },
-      async (res) => {
-        const alert = await this.alertController.create({
-          message: 'Сервер недоступен, попробуйте позже',
-          buttons: ['OK'],
-        });
-        await loading.dismiss();
-        await alert.present();
+      res => {
+        this.ionLoaderService.dismissLoader();
+        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', '');
       }
     );
   }
