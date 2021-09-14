@@ -35,7 +35,7 @@ export class FormPage {
     this.form_id = Number(routeParams.get('productId'));
   }
   async loadData() {
-    this.ionLoaderService.customLoader();
+    this.ionLoaderService.customLoader('Загрузка формы');
     const token = await Storage.get({key: AUTH_TOKEN_KEY});
     this.userData = JSON.parse(token.value);
     this.serviceDataService.getFormElements(String(this.form_id)).subscribe(
@@ -43,9 +43,9 @@ export class FormPage {
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
         this.setupForm(data.array_file);
-        this.formInputs = data.array_input;
-        this.formSelects = data.array_select;
-        this.formFiles = data.array_file;
+        if (data.array_file[0].length > 0)           this.formFiles = data.array_file;
+        if (data.array_input[0].length > 0)           this.formInputs = data.array_input;
+        if (data.array_select[0].length > 0)           this.formSelects = data.array_select;
         this.ionLoaderService.dismissLoader();
       }, res => {
           this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
@@ -63,13 +63,15 @@ export class FormPage {
   }
   setupForm(_properties) {
     _properties.forEach(element => {
-      var key = element[0].control_name;
-      var value = element[0].input_value;
-      if (key == "username")  value = this.userData.username;
-      if (key == "iin")  value = this.userData.iin;
-      if (key == "email")  value = this.userData.email;
-      if (key == "phone")  value = this.userData.telephone;
-      this.formG.addControl(key, this.fb.control(value, Validators.required));
+      if (element.length > 0) {
+        var key = element[0].control_name;
+        var value = element[0].input_value;
+        if (key == "username") value = this.userData.username;
+        if (key == "iin") value = this.userData.iin;
+        if (key == "email") value = this.userData.email;
+        if (key == "phone") value = this.userData.telephone;
+        this.formG.addControl(key, this.fb.control(value, Validators.required));
+      }
     });
   }
   sendData() {

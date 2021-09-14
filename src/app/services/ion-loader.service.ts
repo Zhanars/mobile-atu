@@ -40,9 +40,9 @@ export class IonLoaderService {
   }
 
   // Custom style + hide on tap loader
-  customLoader() {
+  customLoader(mess = 'Загрузка данных') {
     this.loadingController.create({
-      message: 'Загрузка данных',
+      message: mess,
       duration: 4000,
       cssClass:'loader-css-class',
       backdropDismiss:true
