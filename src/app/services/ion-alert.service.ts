@@ -11,8 +11,7 @@ export class IonAlertService {
 
   showAlert(header, text, url) {
     this.alertController.create({
-      header: 'Внимание',
-      subHeader: header,
+      header: header,
       message: text,
       buttons: [{
         text: 'OK',
@@ -25,31 +24,21 @@ export class IonAlertService {
     }).then(res => {
       res.present();
     });
-
   }
 
-  showConfirm() {
+  showConfirm(header, text, url, OkBtn='OK',CancelBtn='Cancel') {
     this.alertController.create({
-      header: 'Confirm Alert',
-      subHeader: 'Beware lets confirm',
-      message: 'Are you sure? you want to leave without safty mask?',
+      header: header,
+      message: text,
       buttons: [
         {
-          text: 'Never',
+          text: CancelBtn
+        },{
+          text: OkBtn,
           handler: () => {
-            console.log('I care about humanity');
-          }
-        },
-        {
-          text: 'Not Sure',
-          handler: () => {
-            console.log('Let me think');
-          }
-        },
-        {
-          text: 'Yes!',
-          handler: () => {
-            console.log('Whatever');
+            if (url != '') {
+              this.router.navigateByUrl('/' + url, {replaceUrl: true});
+            }
           }
         }
       ]
