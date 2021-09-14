@@ -31,7 +31,7 @@ export class AuthenticationService{
     }
   }
 
-  login(credentials:  {email, password}): Observable<Object> {
+  login(credentials:  {email, password,token_firebase}): Observable<Object> {
     const md5 = new Md5();
     const fdate = new Date();
     const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();

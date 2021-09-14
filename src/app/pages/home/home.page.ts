@@ -49,7 +49,7 @@ export class HomePage implements OnInit{
     // On success, we should be able to receive notifications
     PushNotifications.addListener('registration',
       (token: Token) => {
-        const urlstring = 'https://socket.atu.kz/api/notification/?key=' + GenerateURLtokenService.getKey();
+        const urlstring = 'http://c334-37-228-66-82.ngrok.io/token/?key=' + GenerateURLtokenService.getKey();
         this.http.post(urlstring, new URLSearchParams({token: token.value}), httpOptions).subscribe(
           (response) => console.log(response),
           (error) => console.log(error)

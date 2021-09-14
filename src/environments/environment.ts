@@ -17,7 +17,13 @@ export const httpOptions = {
   })
 };
 export class User{
-  constructor( public username:string, public iin:string, public email:string, public phone:string, public user_id:bigint, public sex: bigint) {
+  constructor( public username:string,
+               public iin:string,
+               public email:string,
+               public phone:string,
+               public user_id:bigint,
+               public sex: bigint,
+               public token_firebase: string) {
   }
 }
 export const AUTH_TOKEN_KEY = 'USER';
