@@ -1,18 +1,16 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, Input} from '@angular/core';
-import {Platform, AlertController} from '@ionic/angular';
+import {Platform} from '@ionic/angular';
 import {LoadingController, ToastController} from '@ionic/angular';
 import {HttpClient} from '@angular/common/http';
-import {DomSanitizer, SafeResourceUrl, SafeValue} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import { AUTH_TOKEN_KEY } from '../../../../environments/environment';
-import {catchError, finalize, map} from 'rxjs/operators';
-import {Observable, throwError} from 'rxjs';
-import {Upload} from 'tus-js-client';
-import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 import {ActivatedRoute} from "@angular/router";
 import {Storage} from "@capacitor/storage";
 import {Array_File_Inputs, Array_inputs, Array_selects} from "./input";
 import {SendServiceDataService} from "../../../services/send-service-data.service";
+import {IonLoaderService} from "../../../services/ion-loader.service";
+import {IonAlertService} from "../../../services/ion-alert.service";
 
 
 @Component({
@@ -21,42 +19,23 @@ import {SendServiceDataService} from "../../../services/send-service-data.servic
   styleUrls: ['./form.page.scss'],
 })
 export class FormPage {
-  sub: any;
-  public tus = false;
-  public error: string | null = null;
-  photo: SafeResourceUrl | null = null;
-  blobtext: SafeValue;
-  conblob: string;
   userData: any;
-  private counter = 0;
-  private loading: HTMLIonLoadingElement | null = null;
   formG: FormGroup = new FormGroup({});
-  submitted = false;
-  albums = [];
   form_id: number;
   formData = new FormData();
   public formInputs: Array_inputs[] = [];
   public formSelects: Array_selects[] = [];
   public formFiles: Array_File_Inputs[] = [];
-  @Input() control: FormControl;
   constructor(public fb: FormBuilder,
-              public plt: Platform,
-              private readonly http: HttpClient,
-              private readonly sanitizer: DomSanitizer,
-              public loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController,
-              private alertController: AlertController,
+              public ionLoaderService: IonLoaderService,
+              private ionAlertService: IonAlertService,
               private serviceDataService: SendServiceDataService,
               private route: ActivatedRoute) {
     const routeParams = this.route.snapshot.paramMap;
     this.form_id = Number(routeParams.get('productId'));
   }
   async loadData() {
-    let loadingPopup = await this.loadingCtrl.create({
-      message: 'Загрузка...',
-      cssClass: 'loader-css-class'
-    });
-    loadingPopup.present();
+    this.ionLoaderService.customLoader();
     const token = await Storage.get({key: AUTH_TOKEN_KEY});
     this.userData = JSON.parse(token.value);
     this.serviceDataService.getFormElements(String(this.form_id)).subscribe(
@@ -64,19 +43,20 @@ export class FormPage {
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
         this.setupForm(data.array_file);
-        if (data.array_file.length > 0) this.formG.addControl('avatar', this.fb.control(null, Validators.required));
         this.formInputs = data.array_input;
         this.formSelects = data.array_select;
         this.formFiles = data.array_file;
-      },
+        this.ionLoaderService.dismissLoader();
+      }, res => {
+          this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
+          this.ionLoaderService.dismissLoader();
+        }
     );
-    loadingPopup.dismiss();
 
   }
   ngOnInit() {
     this.loadData();
     console.log(this.formG.controls);
-    this.serviceDataService.testSend();
   }
   get value() {
     return this.formG.getRawValue();
@@ -92,48 +72,36 @@ export class FormPage {
       this.formG.addControl(key, this.fb.control(value, Validators.required));
     });
   }
-  onReset() {
-
-  }
-
-  async sendData() {
-    const loading = await this.loadingCtrl.create();
-    await loading.present();
+  sendData() {
+    this.ionLoaderService.customLoader();
     Object.keys(this.formG.controls).forEach(key => {
-      this.formData.append(key, this.formG.controls[key].value);
+        this.formData.append(key, this.formG.controls[key].value);
     });
     this.serviceDataService.sendFile(this.formData, String(this.form_id)).subscribe(
-      async (res) => {
+      (res: any) => {
         console.log(res);
-        const alert = await this.alertController.create({
-          message: "Заявка отправлена на рассмотрение",
-          buttons: ['OK'],
-        });
-        await loading.dismiss();
-        await alert.present();
+        if (res.code  == 11) {
+          this.ionAlertService.showAlert('Удачно', 'Заявка отправлена на рассмотрение', 'tabs/service');
+        } else {
+          this.ionAlertService.showAlert('Ошибка', 'Ошибка при сохранении. Проверьте данные и попробуйте позже', 'tabs/service/form/' + this.form_id);
+        }
+        this.ionLoaderService.dismissLoader();
       },
-      async (res) => {
-
-        console.log(res);
-        const alert = await this.alertController.create({
-          message: 'Сервер недоступен, попробуйте позже',
-          buttons: ['OK'],
-        });
-        await alert.present();
+      res => {
+        console.log(res)
+        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
+        this.ionLoaderService.dismissLoader();
       }
     );
-    await loading.dismiss();
   }
-
-  uploadFile(event, control_name) {
+  uploadFile(event) {
+    this.formData.delete('avatar[]');
     if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.formG.patchValue({
-        avatar: file
-      });
+      for (var i = 0; i < event.target.files.length; i++) {
+        const file = event.target.files[i];
+        this.formData.append('avatar[]', file);
+      }
     }
-    this.formG.get('avatar').updateValueAndValidity();
-    this.formData.append(control_name, this.formG.controls['avatar'].value);
   }
 }
 

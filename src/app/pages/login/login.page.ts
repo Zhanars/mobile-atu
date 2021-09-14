@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AlertController, LoadingController } from '@ionic/angular'
 import { Router } from '@angular/router';
-import {BehaviorSubject} from "rxjs";
 import {Storage} from "@capacitor/storage";
 import {AUTH_TOKEN_KEY} from "../../../environments/environment";
+import {IonAlertService} from "../../services/ion-alert.service";
+import {IonLoaderService} from "../../services/ion-loader.service";
 
 @Component({
   selector: 'app-login',
@@ -14,12 +14,11 @@ import {AUTH_TOKEN_KEY} from "../../../environments/environment";
 })
 export class LoginPage implements OnInit {
   credentials: FormGroup;
-  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
-              private alertController: AlertController,
+              public ionLoaderService: IonLoaderService,
               private router: Router,
-              private loadingController: LoadingController) {
+              private ionAlertService: IonAlertService) {
 
   }
   ngOnInit() {
@@ -28,44 +27,28 @@ export class LoginPage implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-  async login() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      duration: 2000,
-      spinner: "dots"
-    });
-    await loading.present();
-    let alert = await this.alertController.create();
-    await this.authService.login(this.credentials.value).subscribe(
-      async (res) => {
+  login() {
+    this.ionLoaderService.customLoader();
+    this.authService.login(this.credentials.value).subscribe(
+      res => {
         console.log(res);
         const key_value = JSON.stringify(res);
         let b = JSON.parse(key_value);
         if (b.code == '1'){
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(b.message)});
-          this.isAuthenticated.next(true);
+          this.ionLoaderService.dismissLoader();
+          this.router.navigateByUrl('/tabs', { replaceUrl:true });
         } else {
-          alert.message = "Email/пароль не правильно";
-          alert.buttons = ['OK'];
-          await alert.present();
-          this.isAuthenticated.next(false);
+          this.ionLoaderService.dismissLoader();
+          this.ionAlertService.showAlert('Ошибка', 'Email или пароль не правильный', '');
         }
       },
-      async (res) => {
-        alert.message = "Сервер недоступен, попробуйте позже";
-        alert.buttons = ['OK'];
-        await alert.present();
-        this.isAuthenticated.next(false);
+      res => {
+        this.ionLoaderService.dismissLoader();
+        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', '');
       }
     );
-    await loading.dismiss();
-    if (this.isAuthenticated.getValue()){
-      this.router.navigateByUrl('/tabs').then(
-        () => {
-          window.location.reload();
-        }
-      );
-    }
+    this.ionLoaderService.dismissLoader();
   }
 
   // Easy access for form fields

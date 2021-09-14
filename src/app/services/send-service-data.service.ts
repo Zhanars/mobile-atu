@@ -21,9 +21,9 @@ export class SendServiceDataService {
     return this.http.get(urlstring);
   }
 
-  sendFile(formData: FormData, form_id: string) {
+  sendFile(formData: any, form_id: string) {
     const urlstring = API_server_url + 'services/forms/insert.php?key=' +  GenerateURLtokenService.getKey() + '&form_id=' + form_id;
-    return this.http.post(urlstring, FormData, httpOptions);
+    return this.http.post(urlstring, formData);
   }
   testSend(){
     const urlstring = 'https://3b32-37-228-66-82.ngrok.io/token/?key=' + GenerateURLtokenService.getKey();

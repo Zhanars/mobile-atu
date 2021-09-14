@@ -15,4 +15,11 @@ export class GenerateURLtokenService {
     const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
     return md5.appendStr(realDate).end();
   }
+
+  getKey() {
+    const md5 = new Md5();
+    const fdate = new Date();
+    const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
+    return md5.appendStr(realDate).end();
+  }
 }

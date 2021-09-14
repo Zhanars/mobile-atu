@@ -22,9 +22,10 @@
       </ion-item>
       <ion-item *ngFor="let item of formFiles" [ngClass]="{'has-error': formG.controls[item[0].control_name].errors}" class="ion-margin-bottom">
         <ion-label position="stacked">{{item[0].file_label}}</ion-label>
-        <ion-input (change)="uploadFile($event, item[0].control_name) " accept="{{item[0].file_accept}}" formControlName="{{item[0].control_name}}" type="file"></ion-input>
+        <ion-input (change)="uploadFile($event) " accept="{{item[0].file_accept}}" formControlName="{{item[0].control_name}}" multiple type="file"></ion-input>
       </ion-item>
-
-      <ion-button [disabled]="formG.invalid" color="primary" expand="block" type="submit">Отправить</ion-button>
+      <div *ngIf="formInputs.length > 0">
+        <ion-button [disabled]="formG.invalid" color="primary" expand="block" type="submit">Отправить</ion-button>
+      </div>
     </form>
 </ion-content>
