@@ -1,3 +1,38 @@
 .sc-ion-label-md-h{
   white-space: normal !important;
+  margin-bottom: 20px;
 }
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: normal;
+}
+.alert-tappable.alert-radio {
+  height: auto;
+  contain: content;
+}
+.alert-checkbox-label.sc-ion-alert-md,
+.alert-checkbox-label.sc-ion-alert-ios {
+  white-space: normal;
+}
+.alert-tappable.alert-checkbox {
+  height: auto;
+  contain: content;
+}
+.ion-select-option{
+  white-space: normal !important;
+}
+.ion-select{
+  white-space: normal !important;
+}
+.alert-tappable.alert-radio {
+  height: auto;
+  contain: content;
+}
+
+.alert-radio-label.sc-ion-alert-md,
+.alert-radio-label.sc-ion-alert-ios {
+  white-space: normal;
+}
+:host(.ion-text-wrap) .selected-text {
+  white-space: normal !important;
+}
+
