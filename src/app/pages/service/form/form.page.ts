@@ -43,9 +43,9 @@ export class FormPage {
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
         this.setupForm(data.array_file);
-        if (data.array_file[0].length > 0)           this.formFiles = data.array_file;
-        if (data.array_input[0].length > 0)           this.formInputs = data.array_input;
-        if (data.array_select[0].length > 0)           this.formSelects = data.array_select;
+        if (data.array_file.length > 0)           this.formFiles = data.array_file;
+        if (data.array_input.length > 0)           this.formInputs = data.array_input;
+        if (data.array_select.length > 0)           this.formSelects = data.array_select;
         this.ionLoaderService.dismissLoader();
       }, res => {
           this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
