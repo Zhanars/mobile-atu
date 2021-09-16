@@ -7,7 +7,6 @@ import {Array_File_Inputs, Array_inputs, Array_selects, Array_textarea} from './
 import {SendServiceDataService} from "../../../services/send-service-data.service";
 import {IonLoaderService} from "../../../services/ion-loader.service";
 import {IonAlertService} from "../../../services/ion-alert.service";
-import set = Reflect.set;
 
 
 @Component({
@@ -59,11 +58,9 @@ export class FormPage {
           this.ionLoaderService.dismissLoader();
         }
     );
-    console.log(this.formG.controls);
   }
   ngOnInit() {
     this.loadData();
-    console.log(this.formG.controls);
   }
   get value() {
     return this.formG.getRawValue();
@@ -97,6 +94,8 @@ export class FormPage {
         this.ionLoaderService.dismissLoader();
       },
       res => {
+
+        console.log(res);
         this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
         this.ionLoaderService.dismissLoader();
       }

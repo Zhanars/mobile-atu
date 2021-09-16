@@ -23,6 +23,7 @@ export class SendServiceDataService {
 
   sendFile(formData: any, form_id: string) {
     const urlstring = API_server_url + 'services/forms/insert.php?key=' +  GenerateURLtokenService.getKey() + '&form_id=' + form_id;
+    console.log(urlstring);
     return this.http.post(urlstring, formData);
   }
   testSend(){
