@@ -3,11 +3,10 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Storage} from "@capacitor/storage";
-import {AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
+import {AUTH_TOKEN_KEY} from "../../../environments/environment";
 import {IonAlertService} from "../../services/ion-alert.service";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {PushNotifications, Token} from "@capacitor/push-notifications";
-import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
 import {Capacitor} from "@capacitor/core";
 
 @Component({
@@ -75,26 +74,26 @@ export class LoginPage implements OnInit {
 
   setTokenFirebase(value: string){
     this.data.token_firebase = value;
-      this.data.email = this.credentials.controls['email'].value;
-      this.data.password = this.credentials.controls['password'].value;
-      console.log(this.data);
-      this.authService.login(this.data).subscribe(
-        (res: any) => {
-          if (res.code == '1'){
-            Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
-            this.authService.isAuthenticated.next(true);
-          } else {
-            this.ionLoaderService.dismissLoader();
-            this.authService.isAuthenticated.next(false);
-            this.ionAlertService.showAlert('Ошибка', 'Email или пароль не правильный', '');
-          }
-        },
-        res => {
+    this.data.email = this.credentials.controls['email'].value;
+    this.data.password = this.credentials.controls['password'].value;
+    console.log(this.data);
+    this.authService.login(this.data).subscribe(
+      (res: any) => {
+        if (res.code == '1'){
+          Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
+          this.authService.isAuthenticated.next(true);
+        } else {
           this.ionLoaderService.dismissLoader();
           this.authService.isAuthenticated.next(false);
-          this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', '');
+          this.ionAlertService.showAlert('Ошибка', 'Email или пароль не правильный', '');
         }
-      );
+      },
+      res => {
+        this.ionLoaderService.dismissLoader();
+        this.authService.isAuthenticated.next(false);
+        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', '');
+      }
+    );
     this.ionLoaderService.dismissLoader();
     if (this.authService.isAuthenticated){
       this.router.navigateByUrl('/tabs', { replaceUrl: true });

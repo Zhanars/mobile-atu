@@ -14,7 +14,6 @@ export class AuthenticationService{
 
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   token: User;
-  login_result: string;
 
   constructor( private http: HttpClient) {
     this.loadToken();

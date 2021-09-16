@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, LoadingController, NavController, NavParams} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
 import {Storage} from "@capacitor/storage";

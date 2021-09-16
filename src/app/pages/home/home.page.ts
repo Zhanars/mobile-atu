@@ -3,18 +3,12 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {Router} from '@angular/router';
 import { DomSanitizer} from '@angular/platform-browser';
 import {HOME_page_url, httpOptions} from '../../../environments/environment';
-import {
-  PushNotification,
-  PushNotificationActionPerformed,
-  PushNotifications,
-  Token
-} from '@capacitor/push-notifications';
+import {  PushNotification,  PushNotificationActionPerformed,  PushNotifications,  Token } from '@capacitor/push-notifications';
 import {SendServiceDataService} from '../../services/send-service-data.service';
 import {GenerateURLtokenService} from '../../services/generate-urltoken.service';
 import {HttpClient} from '@angular/common/http';
 import {IonAlertService} from "../../services/ion-alert.service";
-
-
+import {Capacitor} from "@capacitor/core";
 
 @Pipe({ name: 'safe' })
 
@@ -37,6 +31,12 @@ export class HomePage implements OnInit{
     this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url);
   }
   ngOnInit() {
+    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
+    if (isPushNotificationsAvailable) {
+      this.setNotification();
+    }
+  }
+  setNotification(){
     PushNotifications.requestPermissions().then(result => {
       if (result.receive === 'granted') {
         // Register with Apple / Google to receive push via APNS/FCM
@@ -57,7 +57,7 @@ export class HomePage implements OnInit{
       }
     );
 
-       PushNotifications.addListener('pushNotificationActionPerformed',
+    PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: PushNotificationActionPerformed) => {
         this.router.navigateByUrl('/tabs/notification', { replaceUrl:true });
       }

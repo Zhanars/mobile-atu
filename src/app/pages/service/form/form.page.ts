@@ -1,18 +1,13 @@
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Component, Input} from '@angular/core';
-import {Platform} from '@ionic/angular';
-import {LoadingController, ToastController} from '@ionic/angular';
-import {HttpClient} from '@angular/common/http';
-import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
-import {API_server_url, AUTH_TOKEN_KEY} from '../../../../environments/environment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {AUTH_TOKEN_KEY} from '../../../../environments/environment';
 import {ActivatedRoute} from "@angular/router";
 import {Storage} from "@capacitor/storage";
 import {Array_File_Inputs, Array_inputs, Array_selects, Array_textarea} from './input';
 import {SendServiceDataService} from "../../../services/send-service-data.service";
 import {IonLoaderService} from "../../../services/ion-loader.service";
 import {IonAlertService} from "../../../services/ion-alert.service";
-import {Md5} from "ts-md5";
-import {Service} from "../service";
+import set = Reflect.set;
 
 
 @Component({
@@ -21,11 +16,11 @@ import {Service} from "../service";
   styleUrls: ['./form.page.scss'],
 })
 export class FormPage {
-  public itemsService: Service[] = [];
   userData: any;
   formG: FormGroup = new FormGroup({});
   form_id: number;
   formData = new FormData();
+  service_label: string;
   public formInputs: Array_inputs[] = [];
   public formSelects: Array_selects[] = [];
   public formFiles: Array_File_Inputs[] = [];
@@ -34,8 +29,7 @@ export class FormPage {
               public ionLoaderService: IonLoaderService,
               private ionAlertService: IonAlertService,
               private serviceDataService: SendServiceDataService,
-              private route: ActivatedRoute,
-              private readonly http: HttpClient) {
+              private route: ActivatedRoute) {
     const routeParams = this.route.snapshot.paramMap;
     this.form_id = Number(routeParams.get('productId'));
   }
@@ -45,8 +39,14 @@ export class FormPage {
     this.userData = JSON.parse(token.value);
     this.serviceDataService.getFormElements(String(this.form_id)).subscribe(
       (data:any) => {
+        this.service_label = data.service_label;
+        if (data.message != '1') {
+          this.ionLoaderService.dismissLoader();
+          this.ionAlertService.showAlert('Ошибка', data.message, 'tabs/service');
+        }
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
+        this.setupForm(data.array_file);
         this.setupForm(data.array_file);
         this.setupForm(data.array_textarea);
         if (data.array_file.length > 0)           this.formFiles = data.array_file;
@@ -59,7 +59,7 @@ export class FormPage {
           this.ionLoaderService.dismissLoader();
         }
     );
-
+    console.log(this.formG.controls);
   }
   ngOnInit() {
     this.loadData();
@@ -110,20 +110,6 @@ export class FormPage {
         this.formData.append('avatar[]', file);
       }
     }
-  }
-  async getFormName() {
-    const token = await Storage.get({key: AUTH_TOKEN_KEY});
-    const val = JSON.parse(token.value);
-    const md5 = new Md5();
-    const fdate = new Date();
-    const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
-    const urlstring = API_server_url + 'services/get/?key=' + md5.appendStr(realDate).end() + '&service=' + this.form_id;
-    this.http.get(urlstring).subscribe(
-      (data: any) => {
-        console.log(data);
-        this.itemsService = data;
-      },
-    );
   }
 
 }
