@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
     <ion-back-button defaultHref="/tabs/service"></ion-back-button>
     </ion-buttons>
-    <ion-title>Форма</ion-title>
+    <ion-title *ngFor="let item of itemsService">{{item.service_label}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
