@@ -16,6 +16,18 @@ export class Array_File_Inputs {
     public input_validation: string
   ){}
 }
+
+export class Array_textarea {
+  constructor(
+    public textarea_label: string,
+    public textarea_accept: string,
+    public control_name: string,
+    public input_value: string,
+    public input_validation: string,
+    public textarea_placeholder: string
+  ){}
+}
+
 export class Array_selects {
   constructor(
     public select_label: string,

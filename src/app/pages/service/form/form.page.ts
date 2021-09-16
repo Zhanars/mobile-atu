@@ -7,7 +7,7 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import { AUTH_TOKEN_KEY } from '../../../../environments/environment';
 import {ActivatedRoute} from "@angular/router";
 import {Storage} from "@capacitor/storage";
-import {Array_File_Inputs, Array_inputs, Array_selects} from "./input";
+import {Array_File_Inputs, Array_inputs, Array_selects, Array_textarea} from './input';
 import {SendServiceDataService} from "../../../services/send-service-data.service";
 import {IonLoaderService} from "../../../services/ion-loader.service";
 import {IonAlertService} from "../../../services/ion-alert.service";
@@ -26,6 +26,7 @@ export class FormPage {
   public formInputs: Array_inputs[] = [];
   public formSelects: Array_selects[] = [];
   public formFiles: Array_File_Inputs[] = [];
+  public formTextarea: Array_textarea[] = [];
   constructor(public fb: FormBuilder,
               public ionLoaderService: IonLoaderService,
               private ionAlertService: IonAlertService,
@@ -43,9 +44,11 @@ export class FormPage {
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
         this.setupForm(data.array_file);
+        this.setupForm(data.array_textarea);
         if (data.array_file.length > 0)           this.formFiles = data.array_file;
         if (data.array_input.length > 0)           this.formInputs = data.array_input;
         if (data.array_select.length > 0)           this.formSelects = data.array_select;
+        if (data.array_textarea.length > 0)           this.formTextarea = data.array_textarea;
         this.ionLoaderService.dismissLoader();
       }, res => {
           this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
@@ -90,7 +93,6 @@ export class FormPage {
         this.ionLoaderService.dismissLoader();
       },
       res => {
-        console.log(res)
         this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
         this.ionLoaderService.dismissLoader();
       }

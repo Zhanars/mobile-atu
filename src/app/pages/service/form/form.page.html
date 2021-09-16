@@ -24,7 +24,11 @@
         <ion-label position="stacked">{{item[0].file_label}}</ion-label>
         <ion-input (change)="uploadFile($event) " accept="{{item[0].file_accept}}" formControlName="{{item[0].control_name}}" multiple type="file"></ion-input>
       </ion-item>
-      <div *ngIf="formInputs.length > 0">
+      <ion-item *ngFor="let item of formTextarea" [ngClass]="{'has-error': formG.controls[item[0].control_name].errors}" class="ion-margin-bottom">
+        <ion-label position="floating">{{item[0].textarea_label}}</ion-label>
+        <ion-textarea formControlName="{{item[0].control_name}}" placeholder="{{item[0].textarea_placeholder}}"></ion-textarea>
+      </ion-item>
+     <div *ngIf="formInputs.length > 0">
         <ion-button [disabled]="formG.invalid" color="primary" expand="block" type="submit">Отправить</ion-button>
       </div>
     </form>
