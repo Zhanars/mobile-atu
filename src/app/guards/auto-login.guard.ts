@@ -18,12 +18,10 @@ export class AutoLoginGuard implements CanLoad {
       take(1), // Otherwise the Observable doesn't complete!
       map(isAuthenticated => {
         if (isAuthenticated) {
-          // Directly open inside area
           console.log('Found previous token, automatic login');
           this.router.navigateByUrl('/tabs', { replaceUrl: true });
         } else {
-          // Simply allow access to the login
-          return true;
+          return false;
         }
       })
     );
