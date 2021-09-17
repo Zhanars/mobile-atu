@@ -85,6 +85,7 @@ export class LoginPage implements OnInit {
         if (res.code == '1'){
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
           this.authService.isAuthenticated.next(true);
+          this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
         } else {
           this.ionLoaderService.dismissLoader();
           this.authService.isAuthenticated.next(false);
@@ -98,9 +99,6 @@ export class LoginPage implements OnInit {
       }
     );
     this.ionLoaderService.dismissLoader();
-    if (this.authService.isAuthenticated){
-      this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
-    }
   }
 
 

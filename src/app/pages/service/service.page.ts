@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {LoadingController} from '@ionic/angular';
 import {Router} from "@angular/router";
-import {Storage} from "@capacitor/storage";
-import {API_server_url, AUTH_TOKEN_KEY} from "../../../environments/environment";
-import {Md5} from "ts-md5";
+import {API_server_url} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Service} from "./service";
+import {IonLoaderService} from "../../services/ion-loader.service";
+import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
 
 @Component({
   selector: 'app-service',
@@ -18,6 +18,7 @@ export class ServicePage implements OnInit {
 
   constructor(private router: Router,
               private readonly loadingCtrl: LoadingController,
+              private readonly ionLoaderService: IonLoaderService,
               private readonly http: HttpClient) {
     this.loadData();
   }
@@ -39,23 +40,15 @@ export class ServicePage implements OnInit {
       });
     });
   }
-  public async loadData() {
-    let loadingPopup = await this.loadingCtrl.create({
-      message: ""
-    });
-    loadingPopup.present();
-    const token = await Storage.get({key: AUTH_TOKEN_KEY});
-    const val = JSON.parse(token.value);
-    const md5 = new Md5();
-    const fdate = new Date();
-    const realDate = (fdate.getUTCFullYear() + "-" + (fdate.getUTCMonth() + 1) + "-" + fdate.getUTCDate()).toString();
-    const urlstring = API_server_url + 'services/get/?key=' + md5.appendStr(realDate).end();
+  public loadData() {
+    this.ionLoaderService.customLoader('Загрузка');
+    const urlstring = API_server_url + 'services/get/?key=' + GenerateURLtokenService.getKey();
     this.http.get(urlstring).subscribe(
       (data:any)=> {
         this.items = data;
       },
     );
-    loadingPopup.dismiss();
+    this.ionLoaderService.dismissLoader();
   }
 
   doRefresh(event) {
