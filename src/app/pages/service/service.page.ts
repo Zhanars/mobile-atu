@@ -57,4 +57,11 @@ export class ServicePage implements OnInit {
     );
     loadingPopup.dismiss();
   }
+
+  doRefresh(event) {
+    setTimeout(() => {
+      this.loadData();
+      event.target.complete();
+    }, 2000);
+  }
 }

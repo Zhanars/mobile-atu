@@ -70,6 +70,7 @@ export class NotificationPage implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   doRefresh(ev) {
+    this.ngOnInit();
     setTimeout(() => {
       ev.target.complete();
     }, 2000);
