@@ -21,6 +21,9 @@ export class LoginPage implements OnInit {
     password: '',
     token_firebase: ''
   };
+  errorText = 'Ошибка';
+  errorloginText = 'Email или пароль не правильный';
+  errorserverText = 'Сервер недоступен, попробуйте позже';
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               public ionLoaderService: IonLoaderService,
@@ -85,18 +88,18 @@ export class LoginPage implements OnInit {
         } else {
           this.ionLoaderService.dismissLoader();
           this.authService.isAuthenticated.next(false);
-          this.ionAlertService.showAlert('Ошибка', 'Email или пароль не правильный', '');
+          this.ionAlertService.showAlert(this.errorText, this.errorloginText, '');
         }
       },
       res => {
         this.ionLoaderService.dismissLoader();
         this.authService.isAuthenticated.next(false);
-        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', '');
+        this.ionAlertService.showAlert(this.errorText, this.errorserverText, '');
       }
     );
     this.ionLoaderService.dismissLoader();
     if (this.authService.isAuthenticated){
-      this.router.navigateByUrl('/tabs', { replaceUrl: true });
+      this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
     }
   }
 

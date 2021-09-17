@@ -7,7 +7,7 @@
             <ion-img src="assets/icon/logo1.png" ></ion-img>
           </ion-col>
           <ion-col size="7">
-            Профиль
+            {{profileText}}
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -22,13 +22,13 @@
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button (click)="showIntro()">
           <img src="../../../assets/icon/icons8-replay-64.png">
-          <p>Смотреть заново INTRO</p>
+          <p>{{reseeIntroText}}</p>
         </ion-tab-button>
       </ion-col>
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button (click)="(resetPasswordUniver())">
           <img src="../../../assets/icon/icons8-password-100.png">
-          <p>Сброс пароля от Univer</p>
+          <p>{{resetpasswordUniverText}}</p>
         </ion-tab-button>
       </ion-col>
     </ion-row>
@@ -36,13 +36,13 @@
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button (click)="logout()">
           <img src="../../../assets/icon/icons8-logout-100.png">
-          <p>Выйти</p>
+          <p>{{logoutText}}</p>
         </ion-tab-button>
       </ion-col>
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button (click)="logout()">
           <img src="../../../assets/icon/icons8-logout-100.png">
-          <p>Выбрать язык</p>
+          <p>{{changelanguageText}}</p>
         </ion-tab-button>
       </ion-col>
     </ion-row>

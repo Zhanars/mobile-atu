@@ -7,7 +7,7 @@
           <ion-img src="assets/icon/logo1.png" ></ion-img>
         </ion-col>
         <ion-col size="7">
-          Документы
+          {{documentText}}
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -22,13 +22,13 @@
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button tab="document/umkd">
           <img src="../../../assets/icon/icons8-literature-100.png">
-          <p>УМКД</p>
+          <p>{{API_server_url}}</p>
         </ion-tab-button>
       </ion-col>
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button [href]="transcript_url">
           <img src="../../../assets/icon/icons8-document-100.png">
-          <p>Транскрипт</p>
+          <p>{{transcriptText}}</p>
         </ion-tab-button>
       </ion-col>
     </ion-row>
@@ -36,13 +36,13 @@
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button [href]="schedule_subject_url">
           <img src="../../../assets/icon/icons8-schedule-100.png">
-          <p>Расписание</p>
+          <p>{{schedule_subjectText}}</p>
         </ion-tab-button>
       </ion-col>
       <ion-col size="6" size-xl  class="ion-align-self-center">
           <ion-tab-button [href]="schedule_exam_url">
             <img src="../../../assets/icon/icons8-shortlist-100.png">
-            <p>Расписание экзаменов</p>
+            <p>{{schedule_examText}}</p>
           </ion-tab-button>
       </ion-col>
     </ion-row>

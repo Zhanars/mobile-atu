@@ -10,19 +10,19 @@
   <form (ngSubmit)="login()" [formGroup]="credentials">
    <p class="imglogo"><img  src="./../../../assets/icon/logo3.png"></p>
     <div class="input-group">
-      <p class="register-text">Форма авторизации</p>
+      <p class="register-text">{{authFormText}}</p>
       <ion-item>
         <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
       </ion-item>
       <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-        <span *ngIf="email.errors?.required">Email пустое</span>
-        <span *ngIf="email.errors?.email">Email некорректное</span>
+        <span *ngIf="email.errors?.required">Email {{emptyText}}</span>
+        <span *ngIf="email.errors?.email">Email {{incorrectText}}</span>
       </div>
       <ion-item>
-        <ion-input type="password" placeholder="Пароль" formControlName="password"></ion-input>
+        <ion-input formControlName="password" placeholder="{{passwordText}}" type="password"></ion-input>
       </ion-item>
       <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
-        <span *ngIf="password.errors?.required">Пароль пустое</span>
+        <span *ngIf="password.errors?.required">{{passwordText}} {{emptyText}}</span>
         <span *ngIf="password.errors?.minlength">Пароль должен состоять минимум из 6 символов</span>
       </div>
 
@@ -30,14 +30,14 @@
         <ion-row>
           <ion-col size="6" offset="3"  class="ion-align-self-center">
 
-              <ion-button  size="default" type="submit" expand="block" [disabled]="!credentials.valid">Войти</ion-button>
+              <ion-button  [disabled]="!credentials.valid" expand="block" size="default" type="submit">{{loginbuttonText}}</ion-button>
 
           </ion-col>
         </ion-row>
       </ion-grid>
 
          <!--<ion-button type="button" size="small" expand="block" (click)="registerGo()" color="medium" fill="clear"> Забыли логин/пароль?</ion-button>-->
-         <ion-button type="button" size="small" expand="block" (click)="registerGo()" color="medium" fill="clear"> Создать аккаунт</ion-button>
+         <ion-button (click)="registerGo()" color="medium" expand="block" fill="clear" size="small" type="button">{{createaccountText}}</ion-button>
     </div>
 
 
