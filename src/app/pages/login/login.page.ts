@@ -85,10 +85,10 @@ export class LoginPage implements OnInit {
         if (res.code == '1'){
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
           this.authService.isAuthenticated.next(true);
-          this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
-        } else {
           this.ionLoaderService.dismissLoader();
+        } else {
           this.authService.isAuthenticated.next(false);
+          this.ionLoaderService.dismissLoader();
           this.ionAlertService.showAlert(this.errorText, this.errorloginText, '');
         }
       },
@@ -98,7 +98,11 @@ export class LoginPage implements OnInit {
         this.ionAlertService.showAlert(this.errorText, this.errorserverText, '');
       }
     );
-    this.ionLoaderService.dismissLoader();
+    this.authService.isAuthenticated.asObservable().subscribe(s=>{
+      if (s)
+        this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
+    });
+
   }
 
 
