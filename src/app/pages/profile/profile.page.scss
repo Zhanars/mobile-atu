@@ -31,21 +31,4 @@ p {
   text-align: center;
 }
 
-.popOver {
-  ion-backdrop{
-    background-color: ghostwhite;
-  }
-  .popover-wrapper{
-      .popover-arrow::after{
-        background-color: black !important;
-      }
-    .popover-content{
-      app-popover{}
 
-          text-align: center;
-          background-color: lightgrey;
-          border: 1px solid black;
-    }
-  }
-
-}

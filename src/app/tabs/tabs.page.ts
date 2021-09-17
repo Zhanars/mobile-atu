@@ -21,7 +21,6 @@ countNotifications='0';
     });
     this.tubsPage.subject.asObservable().subscribe(s=>{
       this.countNotifications = s;
-      console.log(this.countNotifications);
     });
   }
    ngOnInit() {

@@ -57,3 +57,24 @@ ion-tab-button{
   white-space: normal;
   font-size: 14px;
 }
+
+.popOver {
+  ion-backdrop{
+    background-color: ghostwhite;
+  }
+  .popover-wrapper{
+    .popover-arrow::after{
+      background-color: black !important;
+    }
+    .popover-content{
+      app-popover{}
+      width: 45vw;
+
+
+      text-align: center;
+      background-color: lightgrey;
+      border: 1px solid black;
+    }
+  }
+
+}
