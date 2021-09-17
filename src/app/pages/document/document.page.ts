@@ -10,6 +10,8 @@ import {GenerateURLtokenService} from "../../services/generate-urltoken.service"
 })
 export class DocumentPage implements OnInit {
   public transcript_url: string;
+  public schedule_subject_url: string;
+  public schedule_exam_url: string;
 
   constructor(    private generateURLtokenService: GenerateURLtokenService  ) {
     this.loadIin();
@@ -19,6 +21,8 @@ export class DocumentPage implements OnInit {
     const val = JSON.parse(token.value);
     const iin = val.iin;
     this.transcript_url = API_server_url + 'document/transcript/?key=' + this.generateURLtokenService.getKey() + "&iin=" + iin;
+    this.schedule_subject_url = API_server_url + 'document/schedule_subject/?key=' + this.generateURLtokenService.getKey() + "&iin=" + iin;
+    this.schedule_exam_url = API_server_url + 'document/schedule_exam/?key=' + this.generateURLtokenService.getKey() + "&iin=" + iin;
   }
   ngOnInit() {
   }

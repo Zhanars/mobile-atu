@@ -17,8 +17,34 @@
 
 <ion-content>
 
-  <ion-button  size="default" type="submit" expand="block" (click)="showIntro()">Смотреть заново INTRO</ion-button>
-  <ion-button  size="default" type="submit" expand="block" (click)="(resetPasswordUniver())">Сброс пароля от Универ</ion-button>
-  <ion-button  size="default" type="submit" expand="block" (click)="logout()">Выйти</ion-button>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" size-xl  class="ion-align-self-center">
+        <ion-tab-button (click)="showIntro()">
+          <img src="../../../assets/icon/icons8-replay-64.png">
+          <p>Смотреть заново INTRO</p>
+        </ion-tab-button>
+      </ion-col>
+      <ion-col size="6" size-xl  class="ion-align-self-center">
+        <ion-tab-button (click)="(resetPasswordUniver())">
+          <img src="../../../assets/icon/icons8-password-100.png">
+          <p>Сброс пароля от Univer</p>
+        </ion-tab-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" size-xl  class="ion-align-self-center">
+        <ion-tab-button (click)="logout()">
+          <img src="../../../assets/icon/icons8-logout-100.png">
+          <p>Выйти</p>
+        </ion-tab-button>
+      </ion-col>
+      <ion-col size="6" size-xl  class="ion-align-self-center">
+        <ion-tab-button (click)="logout()">
+          <img src="../../../assets/icon/icons8-logout-100.png">
+          <p>Выбрать язык</p>
+        </ion-tab-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
