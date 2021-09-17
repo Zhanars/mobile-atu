@@ -13,11 +13,11 @@ import {SafePipe} from './pages/home/home.page';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+import { PopoverComponent } from './popover/popover.component';
 
 @NgModule({
-  declarations: [AppComponent, SafePipe],
-  entryComponents: [],
+  declarations: [AppComponent, SafePipe, PopoverComponent],
+  entryComponents: [PopoverComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ServiceWorkerModule.register('ngsw-worker.js', {
   enabled: environment.production,
   // Register the ServiceWorker as soon as the app is stable

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {AlertController, LoadingController} from '@ionic/angular';
+import {AlertController, LoadingController, PopoverController} from '@ionic/angular';
 import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
 import {Storage} from "@capacitor/storage";
 import {INTRO_KEY} from "../../guards/intro.guard";
+import { PopoverComponent } from '../../popover/popover.component';
 
 @Component({
   selector: 'app-profile',
@@ -16,9 +17,21 @@ export class ProfilePage implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private loadingController: LoadingController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public popoverController: PopoverController
   ) {}
-
+  async presentPopover(eve) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      componentProps: {
+              },
+      cssClass: 'popOver',
+      event: eve,
+      mode:'ios',
+      translucent: true
+    });
+   await popover.present();
+  }
   ngOnInit() {
   }
 

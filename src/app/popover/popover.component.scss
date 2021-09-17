@@ -1,0 +1,18 @@
+div.three-columns {
+  display: table;
+  width: 82%;
+  border-collapse: collapse; /* Prevent spaces between cells */
+  margin-left: 12%;
+
+
+}
+div.three-columns > .column {
+  display: table-cell;
+  width: 33.33%;
+  border-left:1px;
+  padding-right: 12%;
+}
+div.three-columns > .column:first-child {
+  /* Since we only want borders between the elements, remove the leftmost border */
+  border-left: none;
+}

@@ -40,11 +40,12 @@
         </ion-tab-button>
       </ion-col>
       <ion-col size="6" size-xl  class="ion-align-self-center">
-        <ion-tab-button (click)="logout()">
-          <img src="../../../assets/icon/icons8-logout-100.png">
+        <ion-tab-button (click)="presentPopover($event)">
+          <img src="../../../assets/icon/icons8-lang-100.png">
           <p>{{changelanguageText}}</p>
         </ion-tab-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>
