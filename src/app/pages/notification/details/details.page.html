@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/notification"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let m of notifications " col-12 col-xl-2 col-lg-3 col-md-4>
+        <ion-card>
+          <ion-item>
+            <ion-label color="dark" class="ion-text-wrap ion-text-capitalize">
+              {{ m.title}}
+            </ion-label>
+          </ion-item>
+          <ion-card-content>
+            <p class="excerpt" [innerHTML]="m.message">
+            {{ m.message}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+

@@ -290,27 +290,6 @@ private handleError(error: any): Observable<never> {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 this.form = this.fb.group({
   dfaculty: [null, [Validators.required]],
   course: [null, [Validators.required]],
@@ -331,6 +310,28 @@ this.form = this.fb.group({
 });
 
 
+
+
+Поиск/search
+<div class="search-overlay ion-align-items-center" slot="fixed" #search>
+    <ion-row>
+      <ion-col size="2">
+        <ion-menu-button color="dark"></ion-menu-button>
+      </ion-col>
+      <ion-col size="8">
+        <ion-input placeholder="Search in emails"></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-avatar tappable (click)="openAccount($event)">
+          <img src="https://en.gravatar.com/userimage/71535578/a4803efe6592196d7bcda63224972984.jpg" />
+        </ion-avatar>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="crescent"></ion-refresher-content>
+  </ion-refresher>
 
 
 
