@@ -16,17 +16,8 @@ export const httpOptions = {
     'Content-Type': 'application/x-www-form-urlencoded'
   })
 };
-export class User{
-  constructor( public username:string,
-               public iin:string,
-               public email:string,
-               public phone:string,
-               public user_id:bigint,
-               public sex: bigint,
-               public token_firebase: string) {
-  }
-}
 export const AUTH_TOKEN_KEY = 'USER';
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import {AlertController} from "@ionic/angular";
 import {Router} from "@angular/router";
+import {Strings} from "../classes/strings";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class IonAlertService {
 
+  strings = Strings;
   constructor(public alertController: AlertController, private router: Router) { }
 
   showAlert(header, text, url = '') {

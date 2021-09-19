@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{registrationText}}</ion-title>
+    <ion-title>{{strings.registrationText}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,33 +15,33 @@
         <ion-input formControlName="email" placeholder="email" type="email"></ion-input>
       </ion-item>
       <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
-        <span *ngIf="email.errors?.required">Email {{emptyText}}</span>
-        <span *ngIf="email.errors?.email">Email {{incorrectText}}</span>
+        <span *ngIf="email.errors?.required">Email {{strings.emptyText}}</span>
+        <span *ngIf="email.errors?.email">Email {{strings.incorrectText}}</span>
       </div>
       <ion-item>
-        <ion-input formControlName="iin" placeholder="{{iinText}}" type="text"></ion-input>
+        <ion-input formControlName="iin" placeholder="{{strings.iinText}}" type="text"></ion-input>
       </ion-item>
       <div *ngIf="(iin.dirty || iin.touched) && iin.errors" class="errors">
-        <span *ngIf="iin.errors?.required">{{iinText}} {{emptyText}}</span>
+        <span *ngIf="iin.errors?.required">{{strings.iinText}} {{strings.emptyText}}</span>
       </div>
       <ion-item>
-        <ion-input autocorrect="on" formControlName="tel" placeholder="{{phonenumberText}}" type="tel"></ion-input>
+        <ion-input autocorrect="on" formControlName="tel" placeholder="{{strings.phonenumberText}}" type="tel"></ion-input>
       </ion-item>
 
       <div *ngIf="(tel.dirty || tel.touched) && tel.errors" class="errors">
-        <span *ngIf="tel.errors?.required">{{phonenumberText}} {{emptyText}}</span>
-        <span *ngIf="tel.errors?.pattern">{{phonenumberText}} {{incorrectText}}</span>
+        <span *ngIf="tel.errors?.required">{{strings.phonenumberText}} {{strings.emptyText}}</span>
+        <span *ngIf="tel.errors?.pattern">{{strings.phonenumberText}} {{strings.incorrectText}}</span>
       </div>
       <ion-item>
-        <ion-input formControlName="password" placeholder="{{passwordText}}" type="password"></ion-input>
+        <ion-input formControlName="password" placeholder="{{strings.passwordText}}" type="password"></ion-input>
       </ion-item>
       <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
-        <span *ngIf="password.errors?.required">{{passwordText}} {{emptyText}}</span>
+        <span *ngIf="password.errors?.required">{{strings.passwordText}} {{strings.emptyText}}</span>
         <span *ngIf="password.errors?.minlength">Пароль должен состоять минимум из 6 символов</span>
       </div>
     </div>
 
-    <ion-button [disabled]="!credentials.valid" expand="block" type="submit">{{createaccountText}}</ion-button>
+    <ion-button [disabled]="!credentials.valid" expand="block" type="submit">{{strings.createaccountText}}</ion-button>
 
   </form>
 </ion-content>

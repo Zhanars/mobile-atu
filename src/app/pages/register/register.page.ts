@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {RegistrationService} from "../../services/registration.service";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {IonAlertService} from "../../services/ion-alert.service";
+import {Strings} from "../../classes/strings";
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import {IonAlertService} from "../../services/ion-alert.service";
 export class RegisterPage implements OnInit {
   credentials: FormGroup;
 
+  strings = Strings;
   constructor(private fb: FormBuilder,
               private RegService: RegistrationService,
               public ionLoaderService: IonLoaderService,

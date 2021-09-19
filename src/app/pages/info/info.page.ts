@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import '@capacitor-community/http';
 import { Plugins } from '@capacitor/core';
+import {Strings} from "../../classes/strings";
 
 @Component({
   selector: 'app-info',
@@ -11,6 +12,7 @@ import { Plugins } from '@capacitor/core';
 export class InfoPage implements OnInit {
   productInformation=null
   barCode: any;
+  strings = Strings;
   constructor(public barcodeScanner : BarcodeScanner) {}
 
 

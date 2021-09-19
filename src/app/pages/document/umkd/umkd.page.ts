@@ -8,6 +8,7 @@ import {Storage} from "@capacitor/storage";
 import {async} from "rxjs";
 import {Subject} from "./subject";
 import {GenerateURLtokenService} from "../../../services/generate-urltoken.service";
+import {Strings} from "../../../classes/strings";
 
 @Component({
   selector: 'app-umkd',
@@ -17,6 +18,7 @@ import {GenerateURLtokenService} from "../../../services/generate-urltoken.servi
 export class UmkdPage{
 
   public items: Subject[] = [];
+  strings = Strings;
   constructor(public http: HttpClient, public loadingCtrl: LoadingController) {
     this.loadData();
   }

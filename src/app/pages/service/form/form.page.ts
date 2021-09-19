@@ -1,12 +1,13 @@
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Component} from '@angular/core';
-import {AUTH_TOKEN_KEY} from '../../../../environments/environment';
-import {ActivatedRoute} from "@angular/router";
 import {Storage} from "@capacitor/storage";
+import {ActivatedRoute} from "@angular/router";
 import {Array_File_Inputs, Array_inputs, Array_selects, Array_textarea} from './input';
 import {SendServiceDataService} from "../../../services/send-service-data.service";
 import {IonLoaderService} from "../../../services/ion-loader.service";
 import {IonAlertService} from "../../../services/ion-alert.service";
+import {Strings} from "../../../classes/strings";
+import {AUTH_TOKEN_KEY} from "../../../../environments/environment";
 
 
 @Component({
@@ -15,10 +16,10 @@ import {IonAlertService} from "../../../services/ion-alert.service";
   styleUrls: ['./form.page.scss'],
 })
 export class FormPage {
-  userData: any;
   formG: FormGroup = new FormGroup({});
   form_id: number;
   formData = new FormData();
+  strings = Strings;
   service_label: string;
   public formInputs: Array_inputs[] = [];
   public formSelects: Array_selects[] = [];
@@ -33,15 +34,13 @@ export class FormPage {
     this.form_id = Number(routeParams.get('productId'));
   }
   async loadData() {
-    this.ionLoaderService.customLoader('Загрузка формы');
-    const token = await Storage.get({key: AUTH_TOKEN_KEY});
-    this.userData = JSON.parse(token.value);
+    this.ionLoaderService.customLoader(Strings.loadingformText);
     this.serviceDataService.getFormElements(String(this.form_id)).subscribe(
       (data:any) => {
         this.service_label = data.service_label;
         if (data.message != '1') {
           this.ionLoaderService.dismissLoader();
-          this.ionAlertService.showAlert('Ошибка', data.message, 'tabs/service');
+          this.ionAlertService.showAlert(Strings.errorText, data.message, 'tabs/service');
         }
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
@@ -54,7 +53,7 @@ export class FormPage {
         if (data.array_textarea.length > 0)           this.formTextarea = data.array_textarea;
         this.ionLoaderService.dismissLoader();
       }, res => {
-          this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
+          this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, 'tabs/service');
           this.ionLoaderService.dismissLoader();
         }
     );
@@ -70,10 +69,10 @@ export class FormPage {
       if (element.length > 0) {
         var key = element[0].control_name;
         var value = element[0].input_value;
-        if (key == "username") value = this.userData.username;
-        if (key == "iin") value = this.userData.iin;
-        if (key == "email") value = this.userData.email;
-        if (key == "phone") value = this.userData.telephone;
+        if (key == "username") value = Strings.username;
+        if (key == "iin") value = Strings.iin;
+        if (key == "email") value = Strings.email;
+        if (key == "phone") value = Strings.telephone;
         this.formG.addControl(key, this.fb.control(value, Validators.required));
       }
     });
@@ -87,16 +86,16 @@ export class FormPage {
       (res: any) => {
         console.log(res);
         if (res.code  == 11) {
-          this.ionAlertService.showAlert('Удачно', 'Заявка отправлена на рассмотрение', 'tabs/service');
+          this.ionAlertService.showAlert(Strings.successText, 'Заявка отправлена на рассмотрение', 'tabs/service');
         } else {
-          this.ionAlertService.showAlert('Ошибка', 'Ошибка при сохранении. Проверьте данные и попробуйте позже', 'tabs/service/form/' + this.form_id);
+          this.ionAlertService.showAlert(Strings.errorText, Strings.sendFormErrorText, 'tabs/service/form/' + this.form_id);
         }
         this.ionLoaderService.dismissLoader();
       },
       res => {
 
         console.log(res);
-        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', 'tabs/service');
+        this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, 'tabs/service');
         this.ionLoaderService.dismissLoader();
       }
     );

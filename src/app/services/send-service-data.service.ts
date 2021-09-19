@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {API_server_url, httpOptions} from "../../environments/environment";
+import {API_server_url, AUTH_TOKEN_KEY, httpOptions} from "../../environments/environment";
 import {GenerateURLtokenService} from "./generate-urltoken.service";
 import {HttpClient} from "@angular/common/http";
+import {Strings} from "../classes/strings";
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SendServiceDataService {
-
   constructor(private http: HttpClient) { }
 
   sendPost(send_data: any, form_id: string): Observable<any> {
@@ -34,4 +36,17 @@ export class SendServiceDataService {
       (error) => console.log(error)
     );
   }
+
+  loadStrings(lang:string){
+    let url = API_server_url + 'strings/get/?key=' + GenerateURLtokenService.getKey() + "&lang=" + lang;
+    console.log(url);
+    return this.http.get(url);
+  }
+
+  setLang(lang: string) {
+    let url = API_server_url + 'users/update.php?key=' + GenerateURLtokenService.getKey() + "&lang=" + lang + "&user_id=" + Strings.user_id;
+    console.log(url);
+    this.http.get(url).subscribe();
+  }
+
 }

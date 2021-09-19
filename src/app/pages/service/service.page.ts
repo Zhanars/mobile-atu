@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {Service} from "./service";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
+import {Strings} from "../../classes/strings";
 
 @Component({
   selector: 'app-service',
@@ -15,6 +16,7 @@ import {GenerateURLtokenService} from "../../services/generate-urltoken.service"
 export class ServicePage implements OnInit {
 
   public items: Service[] = [];
+  strings = Strings;
 
   constructor(private router: Router,
               private readonly loadingCtrl: LoadingController,
@@ -41,7 +43,7 @@ export class ServicePage implements OnInit {
     });
   }
   public loadData() {
-    this.ionLoaderService.customLoader('Загрузка');
+    this.ionLoaderService.customLoader();
     const urlstring = API_server_url + 'services/get/?key=' + GenerateURLtokenService.getKey();
     this.http.get(urlstring).subscribe(
       (data:any)=> {

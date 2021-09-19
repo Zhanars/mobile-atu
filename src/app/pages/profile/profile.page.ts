@@ -4,7 +4,10 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {Router} from "@angular/router";
 import {Storage} from "@capacitor/storage";
 import {INTRO_KEY} from "../../guards/intro.guard";
-import { PopoverComponent } from '../../popover/popover.component';
+import { PopoverComponent } from '../../components/popover/popover.component';
+import {Strings} from "../../classes/strings";
+import {IonLoaderService} from "../../services/ion-loader.service";
+import {IonAlertService} from "../../services/ion-alert.service";
 
 @Component({
   selector: 'app-profile',
@@ -13,12 +16,13 @@ import { PopoverComponent } from '../../popover/popover.component';
 })
 
 export class ProfilePage implements OnInit {
+  strings = Strings;
 
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private loadingController: LoadingController,
-    private alertController: AlertController,
+    private ionAlertService: IonAlertService,
+    private ionLoaderService: IonLoaderService,
     public popoverController: PopoverController
   ) {}
   async presentPopover(eve) {
@@ -36,8 +40,8 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
   }
 
-  async logout() {
-    await this.authService.logout();
+  logout() {
+    this.authService.logout();
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
@@ -47,18 +51,9 @@ export class ProfilePage implements OnInit {
   }
 
   async resetPasswordUniver() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Пожалуйста пододждите...',
-      duration: 2000
-    });
-    await loading.present();
-    await loading.dismiss();
-    const alert = await this.alertController.create({
-      message: "Отлично",
-      buttons: ['OK'],
-    });
-    await alert.present();
+    this.ionLoaderService.simpleLoader();
+    this.ionLoaderService.dismissLoader();
+    this.ionAlertService.showAlert(this.strings.successText, this.strings.successText);
   }
 
 }

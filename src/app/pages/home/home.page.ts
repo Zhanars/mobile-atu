@@ -9,10 +9,12 @@ import {GenerateURLtokenService} from '../../services/generate-urltoken.service'
 import {HttpClient} from '@angular/common/http';
 import {IonAlertService} from "../../services/ion-alert.service";
 import {Capacitor} from "@capacitor/core";
+import {Strings} from "../../classes/strings";
 
 @Pipe({ name: 'safe' })
 
 export class SafePipe implements PipeTransform {
+
   constructor(private sanitizer: DomSanitizer) {}
   transform(HOME_page_url) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(HOME_page_url);
@@ -25,6 +27,7 @@ export class SafePipe implements PipeTransform {
 })
 export class HomePage implements OnInit{
 
+  strings = Strings;
   home_page_url;
   constructor(private authService: AuthenticationService, private router: Router, private domSanitizer: DomSanitizer,
               private serviceDataService: SendServiceDataService,private http: HttpClient,private ionAlertService: IonAlertService) {

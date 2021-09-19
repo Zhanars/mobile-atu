@@ -13,6 +13,7 @@ import {API_server_url, AUTH_TOKEN_KEY} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {GenerateURLtokenService} from "../services/generate-urltoken.service";
 import {Subject} from "rxjs";
+import {Strings} from "../classes/strings";
 
 @NgModule({
   imports: [

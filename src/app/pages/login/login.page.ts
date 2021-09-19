@@ -8,6 +8,7 @@ import {IonAlertService} from "../../services/ion-alert.service";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {PushNotifications, Token} from "@capacitor/push-notifications";
 import {Capacitor} from "@capacitor/core";
+import {Strings} from "../../classes/strings";
 
 @Component({
   selector: 'app-login',
@@ -15,15 +16,13 @@ import {Capacitor} from "@capacitor/core";
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  strings = Strings;
   credentials: FormGroup;
   data = {
     email: '',
     password: '',
     token_firebase: ''
   };
-  errorText = 'Ошибка';
-  errorloginText = 'Email или пароль не правильный';
-  errorserverText = 'Сервер недоступен, попробуйте позже';
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               public ionLoaderService: IonLoaderService,
@@ -83,19 +82,21 @@ export class LoginPage implements OnInit {
     this.authService.login(this.data).subscribe(
       (res: any) => {
         if (res.code == '1'){
+          console.log(res.message);
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
+          Strings.setUser(res.message());
           this.authService.isAuthenticated.next(true);
           this.ionLoaderService.dismissLoader();
         } else {
           this.authService.isAuthenticated.next(false);
           this.ionLoaderService.dismissLoader();
-          this.ionAlertService.showAlert(this.errorText, this.errorloginText, '');
+          this.ionAlertService.showAlert(Strings.errorText, Strings.errorloginText, '');
         }
       },
       res => {
         this.ionLoaderService.dismissLoader();
         this.authService.isAuthenticated.next(false);
-        this.ionAlertService.showAlert(this.errorText, this.errorserverText, '');
+        this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, '');
       }
     );
     this.authService.isAuthenticated.asObservable().subscribe(s=>{

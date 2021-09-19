@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import {LoadingController} from "@ionic/angular";
+import {Strings} from "../classes/strings";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IonLoaderService {
 
+  strings = Strings;
   constructor(public loadingController: LoadingController) { }
 
   // Simple loader
-  simpleLoader() {
+  simpleLoader(mess = this.strings.simpleLoaderText) {
     this.loadingController.create({
-      message: 'Загрузка...'
+      message: mess,
+      duration: 4000,
+      cssClass:'loader-css-class'
     }).then((response) => {
       response.present();
     });
@@ -40,7 +44,7 @@ export class IonLoaderService {
   }
 
   // Custom style + hide on tap loader
-  customLoader(mess = 'Загрузка данных') {
+  customLoader(mess = this.strings.customLoaderText) {
     this.loadingController.create({
       message: mess,
       duration: 4000,

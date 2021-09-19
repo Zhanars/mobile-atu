@@ -3,6 +3,7 @@ import { IonSlides } from '@ionic/angular';
 import { INTRO_KEY } from 'src/app/guards/intro.guard';
 import { Router } from '@angular/router';
 import { Storage } from '@capacitor/storage';
+import {Strings} from "../../classes/strings";
 
 @Component({
   selector: 'app-intro',
@@ -12,6 +13,7 @@ import { Storage } from '@capacitor/storage';
 export class IntroPage implements OnInit {
   @ViewChild(IonSlides)slides: IonSlides;
 
+  strings = Strings;
   constructor(private router: Router) {
 
   }

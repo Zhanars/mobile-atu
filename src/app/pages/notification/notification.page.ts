@@ -5,25 +5,22 @@ import { HttpClient } from '@angular/common/http';
 import {Storage} from "@capacitor/storage";
 import {API_server_url, AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
 import {Md5} from "ts-md5";
+import {Strings} from "../../classes/strings";
+import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
   styleUrls: ['./notification.page.scss'],
 })
 export class NotificationPage implements OnInit {
+  strings = Strings;
   emails = [];
-  md5 = new Md5();
-  fdate = new Date();
-  realDate = (this.fdate.getUTCFullYear() + "-" + (this.fdate.getUTCMonth() + 1) + "-" + this.fdate.getUTCDate()).toString();
-  key = this.md5.appendStr(this.realDate).end();
   constructor(private http: HttpClient, private popoverCtrl: PopoverController, private router: Router) {
+    console.log(Strings);
   }
 
   async ngOnInit() {
-    const token = await Storage.get({key: AUTH_TOKEN_KEY});
-    const val = JSON.parse(token.value);
-    const userid = val.user_id;
-    const urlstring = API_server_url + 'notification/?key=' + this.key+'&user_id='+userid;
+    const urlstring = API_server_url + 'notification/?key=' + GenerateURLtokenService.getKey() +'&user_id='+Strings.user_id;
     console.log(urlstring);
 
     this.http.get<any[]>(urlstring).subscribe(res => {
@@ -60,7 +57,7 @@ export class NotificationPage implements OnInit {
   }
 
   private setReadedStatus(id) {
-    const urlstring = API_server_url + 'notification/update.php/?key=' +  this.key;
+    const urlstring = API_server_url + 'notification/update.php/?key=' + GenerateURLtokenService.getKey();
     console.log(urlstring);
     this.http.post(urlstring, new URLSearchParams({'notification_id':  id, 'read': "true"}), httpOptions).subscribe(
       (response) => console.log(response),
