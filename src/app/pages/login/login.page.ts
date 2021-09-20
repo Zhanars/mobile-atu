@@ -84,7 +84,7 @@ export class LoginPage implements OnInit {
         if (res.code == '1'){
           console.log(res.message);
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
-          Strings.setUser(res.message());
+          Strings.setUser(res.message);
           this.authService.isAuthenticated.next(true);
           this.ionLoaderService.dismissLoader();
         } else {
