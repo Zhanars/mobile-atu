@@ -3,6 +3,10 @@ export interface ConfigStrings {
   errorloginText: string;
   errorserverText: string;
   errorText: string;
+  gotMessageText: string;
+  gotoText: string;
+  hideText: string;
+  successSendFormText: string;
   lang
   documentText
   transcriptText

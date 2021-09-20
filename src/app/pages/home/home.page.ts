@@ -68,7 +68,7 @@ export class HomePage implements OnInit{
 
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
-        this.ionAlertService.showConfirm('Вам пришло сообщение', notification.body, 'tabs/notification','Перейти','Скрыть');
+        this.ionAlertService.showConfirm(Strings.gotMessageText, notification.body, 'tabs/notification',Strings.gotoText,Strings.hideText);
       }
     );
   }

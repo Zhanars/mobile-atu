@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {LoadingController, PopoverController} from '@ionic/angular';
+import {PopoverController} from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import {Storage} from "@capacitor/storage";
-import {API_server_url, AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
-import {Md5} from "ts-md5";
 import {Strings} from "../../classes/strings";
-import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
+import {SendServiceDataService} from "../../services/send-service-data.service";
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.page.html',
@@ -15,15 +12,16 @@ import {GenerateURLtokenService} from "../../services/generate-urltoken.service"
 export class NotificationPage implements OnInit {
   strings = Strings;
   emails = [];
-  constructor(private http: HttpClient, private popoverCtrl: PopoverController, private router: Router) {
-    console.log(Strings);
+  constructor(
+    private http: HttpClient,
+    private popoverCtrl: PopoverController,
+    private sendServiceDataService: SendServiceDataService,
+    private router: Router
+  ) {
   }
 
-  async ngOnInit() {
-    const urlstring = API_server_url + 'notification/?key=' + GenerateURLtokenService.getKey() +'&user_id='+Strings.user_id;
-    console.log(urlstring);
-
-    this.http.get<any[]>(urlstring).subscribe(res => {
+  ngOnInit() {
+    this.sendServiceDataService.getNotification().subscribe(res => {
       this.emails = res;
       for (let e of this.emails) {
         // Create a custom color for every email
@@ -32,14 +30,11 @@ export class NotificationPage implements OnInit {
       }
     });
   }
-
   openDetails(id,read) {
     this.router.navigate([ 'tabs/notification/details', id]);
     if(!read)
     this.setReadedStatus(id);
   }
-
-  // https://stackoverflow.com/questions/3426404/create-a-hexadecimal-colour-based-on-a-string-with-javascript
   private hashCode(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -57,9 +52,7 @@ export class NotificationPage implements OnInit {
   }
 
   private setReadedStatus(id) {
-    const urlstring = API_server_url + 'notification/update.php/?key=' + GenerateURLtokenService.getKey();
-    console.log(urlstring);
-    this.http.post(urlstring, new URLSearchParams({'notification_id':  id, 'read': "true"}), httpOptions).subscribe(
+    this.sendServiceDataService.setNotificationStatusRead(id).subscribe(
       (response) => console.log(response),
       (error) => console.log(error)
     );

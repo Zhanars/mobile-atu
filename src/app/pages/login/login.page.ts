@@ -9,6 +9,8 @@ import {IonLoaderService} from "../../services/ion-loader.service";
 import {PushNotifications, Token} from "@capacitor/push-notifications";
 import {Capacitor} from "@capacitor/core";
 import {Strings} from "../../classes/strings";
+import {ConfigStrings} from "../../interfaces/config-strings";
+import {SendServiceDataService} from "../../services/send-service-data.service";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ export class LoginPage implements OnInit {
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               public ionLoaderService: IonLoaderService,
+              private sendServiceDataService:SendServiceDataService,
               private router: Router,
               private ionAlertService: IonAlertService) {
 
@@ -85,6 +88,11 @@ export class LoginPage implements OnInit {
           console.log(res.message);
           Storage.set({key: AUTH_TOKEN_KEY, value: JSON.stringify(res.message)});
           Strings.setUser(res.message);
+          this.sendServiceDataService.loadStrings(res.message.user_lang).subscribe(
+            (x:ConfigStrings)  => {
+              Strings.setString(x);
+            }
+          );
           this.authService.isAuthenticated.next(true);
           this.ionLoaderService.dismissLoader();
         } else {

@@ -45,6 +45,10 @@ export class Strings {
   static loadingformText: string;
   static errorloginText: string;
   static sendFormErrorText: string;
+  static gotMessageText: string;
+  static gotoText: string;
+  static hideText: string;
+  static successSendFormText: string;
 
   static setString(x: ConfigStrings) {
     Object.keys(x).forEach(key => {

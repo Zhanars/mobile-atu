@@ -1,13 +1,11 @@
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Component} from '@angular/core';
-import {Storage} from "@capacitor/storage";
 import {ActivatedRoute} from "@angular/router";
 import {Array_File_Inputs, Array_inputs, Array_selects, Array_textarea} from './input';
 import {SendServiceDataService} from "../../../services/send-service-data.service";
 import {IonLoaderService} from "../../../services/ion-loader.service";
 import {IonAlertService} from "../../../services/ion-alert.service";
 import {Strings} from "../../../classes/strings";
-import {AUTH_TOKEN_KEY} from "../../../../environments/environment";
 
 
 @Component({
@@ -33,7 +31,7 @@ export class FormPage {
     const routeParams = this.route.snapshot.paramMap;
     this.form_id = Number(routeParams.get('productId'));
   }
-  async loadData() {
+  loadData() {
     this.ionLoaderService.customLoader(Strings.loadingformText);
     this.serviceDataService.getFormElements(String(this.form_id)).subscribe(
       (data:any) => {
@@ -86,14 +84,13 @@ export class FormPage {
       (res: any) => {
         console.log(res);
         if (res.code  == 11) {
-          this.ionAlertService.showAlert(Strings.successText, 'Заявка отправлена на рассмотрение', 'tabs/service');
+          this.ionAlertService.showAlert(Strings.successText, Strings.successSendFormText, 'tabs/service');
         } else {
           this.ionAlertService.showAlert(Strings.errorText, Strings.sendFormErrorText, 'tabs/service/form/' + this.form_id);
         }
         this.ionLoaderService.dismissLoader();
       },
       res => {
-
         console.log(res);
         this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, 'tabs/service');
         this.ionLoaderService.dismissLoader();

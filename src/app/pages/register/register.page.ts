@@ -36,13 +36,13 @@ export class RegisterPage implements OnInit {
     this.RegService.register(this.credentials.value).subscribe(
       res => {
         this.ionLoaderService.dismissLoader();
-        this.ionAlertService.showAlert('Ошибка', res.text, '');
+        this.ionAlertService.showAlert(Strings.errorText, res.text, '');
         if (res.code == 11)
         this.router.navigateByUrl('/login', { replaceUrl: true });
       },
       res => {
         this.ionLoaderService.dismissLoader();
-        this.ionAlertService.showAlert('Ошибка', 'Сервер недоступен, попробуйте позже', '');
+        this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, '');
       }
     );
   }

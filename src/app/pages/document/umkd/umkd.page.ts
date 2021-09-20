@@ -1,14 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {LoadingController, NavController, NavParams} from "@ionic/angular";
-import {HttpClient} from "@angular/common/http";
-import {map, timeout} from "rxjs/operators";
-import {API_server_url, AUTH_TOKEN_KEY, httpOptions} from "../../../../environments/environment";
-import {Md5} from "ts-md5";
-import {Storage} from "@capacitor/storage";
-import {async} from "rxjs";
+import { Component} from '@angular/core';
 import {Subject} from "./subject";
-import {GenerateURLtokenService} from "../../../services/generate-urltoken.service";
 import {Strings} from "../../../classes/strings";
+import {SendServiceDataService} from "../../../services/send-service-data.service";
+import {IonLoaderService} from "../../../services/ion-loader.service";
 
 @Component({
   selector: 'app-umkd',
@@ -19,7 +13,10 @@ export class UmkdPage{
 
   public items: Subject[] = [];
   strings = Strings;
-  constructor(public http: HttpClient, public loadingCtrl: LoadingController) {
+  constructor(
+    private sendServiceDataService: SendServiceDataService,
+    private readonly ionLoaderService: IonLoaderService
+  ) {
     this.loadData();
   }
   expandItem(item): void {
@@ -37,22 +34,10 @@ export class UmkdPage{
       });
     }
   }
-  async loadData() {
-      let loadingPopup = await this.loadingCtrl.create({
-        message: ""
-      });
-      loadingPopup.present();
-      const token = await Storage.get({key: AUTH_TOKEN_KEY});
-      const val = JSON.parse(token.value);
-      const iin = val.iin;
-      const urlstring = API_server_url + 'document/umkd/?key=' + GenerateURLtokenService.getKey() + "&iin=" + iin;
-      console.log(urlstring);
-      this.http.get(urlstring).subscribe(
-        (data:any)=> {
-          this.items = data;
-        },
-      )
-      loadingPopup.dismiss();
+  loadData() {
+    this.ionLoaderService.customLoader();
+    this.sendServiceDataService.getUMKD().subscribe((data: any) => {  this.items = data;  }  );
+    this.ionLoaderService.dismissLoader();
   }
   doRefresh(refresher) {
     this.loadData();
