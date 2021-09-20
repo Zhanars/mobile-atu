@@ -44,9 +44,7 @@ export class ServicePage implements OnInit {
     });
   }
   loadData() {
-    this.ionLoaderService.customLoader();
     this.sendServiceDataService.getServices().subscribe(      (data:any)=> { this.items = data; }    );
-    this.ionLoaderService.dismissLoader();
   }
 
   doRefresh(event) {
