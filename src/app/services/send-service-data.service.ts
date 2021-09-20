@@ -66,5 +66,10 @@ export class SendServiceDataService {
     console.log(url);
     this.http.get(url).subscribe();
   }
+  resetPasswordInUniver() {
+    let url = API_server_url + 'profile/?key=' + GenerateURLtokenService.getKey() + "&iin=" + Strings.iin;
+    console.log(url);
+    this.http.get(url).subscribe();
+  }
 
 }
