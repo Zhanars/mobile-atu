@@ -34,14 +34,4 @@ import {Strings} from "./classes/strings";
   bootstrap: [AppComponent],
 })
 export class AppModule {
-  constructor(private sendServiceDataService:SendServiceDataService) {
-    this.loadStr();
-  }
-  loadStr() {
-    this.sendServiceDataService.loadStrings(Strings.user_lang).subscribe(
-      (x: ConfigStrings) => {
-        Strings.setString(x);
-      }
-    );
-  }
 }

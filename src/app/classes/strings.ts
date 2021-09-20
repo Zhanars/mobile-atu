@@ -55,16 +55,10 @@ export class Strings {
     });
   }
   static setUser(x: Userdata) {
-    Strings.username = x.username;
-    Strings.iin = x.iin;
-    Strings.email = x.email;
-    Strings.telephone = x.telephone;
-    Strings.user_id = x.user_id;
-    Strings.sex = x.sex;
-    Strings.user_lang = x.user_lang;
-    Strings.token_firebase = x.token_firebase;
+    Object.keys(x).forEach(key => {
+      Strings[key] = x[key];
+    });
   }
-
   static deleteUser() {
     Strings.username = '';
     Strings.iin = '';
