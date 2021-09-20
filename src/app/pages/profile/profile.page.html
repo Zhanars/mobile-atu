@@ -35,15 +35,24 @@
     </ion-row>
     <ion-row>
       <ion-col size="6" size-xl  class="ion-align-self-center">
-        <ion-tab-button (click)="logout()">
-          <img src="../../../assets/icon/icons8-logout-100.png">
-          <p>{{strings.logoutText}}</p>
+        <ion-tab-button (click)="presentAlertCheckbox()">
+          <img src="../../../assets/icon/icons8-helpdesk-100.png">
+          <p>Обратиться в службу поддержки</p>
         </ion-tab-button>
       </ion-col>
       <ion-col size="6" size-xl  class="ion-align-self-center">
         <ion-tab-button (click)="presentPopover($event)">
           <img src="../../../assets/icon/icons8-lang-100.png">
           <p>{{strings.changelanguageText}}</p>
+        </ion-tab-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+
+      <ion-col size="6" size-xl  class="ion-align-self-center">
+        <ion-tab-button (click)="logout()">
+          <img src="../../../assets/icon/icons8-logout-100.png">
+          <p>{{strings.logoutText}}</p>
         </ion-tab-button>
       </ion-col>
     </ion-row>

@@ -47,6 +47,35 @@ export class ProfilePage implements OnInit {
       res.present();
     });
   }
+  async presentAlertCheckbox() {
+    const alert = await this.alertController.create({
+
+      header: 'Опишите проблему',
+      inputs: [
+        {
+          name: 'problem',
+          type: 'textarea',
+          label: 'problem'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   async presentPopover(eve) {
     const popover = await this.popoverController.create({
