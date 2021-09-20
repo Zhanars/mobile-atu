@@ -14,7 +14,7 @@ export class IonLoaderService {
   simpleLoader(mess = this.strings.simpleLoaderText) {
     this.loadingController.create({
       message: mess,
-      duration: 4000,
+      duration: 500,
       cssClass:'loader-css-class'
     }).then((response) => {
       response.present();
@@ -34,7 +34,7 @@ export class IonLoaderService {
   autoLoader() {
     this.loadingController.create({
       message: 'Loader hides after 4 seconds',
-      duration: 4000
+      duration: 500
     }).then((response) => {
       response.present();
       response.onDidDismiss().then((response) => {
@@ -47,7 +47,7 @@ export class IonLoaderService {
   customLoader(mess = this.strings.customLoaderText) {
     this.loadingController.create({
       message: mess,
-      duration: 4000,
+      duration: 500,
       cssClass:'loader-css-class',
       backdropDismiss:true
     }).then((res) => {
