@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:343911531880:android:461ff4cb1d1287ce1b42dd",
         "android_client_info": {
-          "package_name": "kz.atu.uit.smart"
+          "package_name": "io.ionic.starter"
         }
       },
       "oauth_client": [
