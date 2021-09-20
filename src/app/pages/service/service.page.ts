@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LoadingController} from '@ionic/angular';
-import {Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {Service} from "./service";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {Strings} from "../../classes/strings";
@@ -13,7 +13,7 @@ import {SendServiceDataService} from "../../services/send-service-data.service";
 })
 export class ServicePage implements OnInit {
 
-  public items: Service[] = [];
+  items: Service[] = [];
   strings = Strings;
 
   constructor(private router: Router,
@@ -21,14 +21,16 @@ export class ServicePage implements OnInit {
               private sendServiceDataService: SendServiceDataService,
               private readonly ionLoaderService: IonLoaderService
   ) {
-    this.loadData();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.loadData();
+      }
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-
-  public searchService() {
+  searchService() {
     const items = Array.from(document.querySelector('ion-list').children);
     const query = document.querySelector('ion-searchbar').value.toLowerCase();
     requestAnimationFrame(() => {
@@ -41,7 +43,7 @@ export class ServicePage implements OnInit {
       });
     });
   }
-  public loadData() {
+  loadData() {
     this.ionLoaderService.customLoader();
     this.sendServiceDataService.getServices().subscribe(      (data:any)=> { this.items = data; }    );
     this.ionLoaderService.dismissLoader();

@@ -17,4 +17,5 @@ import { ServicePage } from './service.page';
   ],
   declarations: [ServicePage]
 })
-export class ServicePageModule {}
+export class ServicePageModule {
+}

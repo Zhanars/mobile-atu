@@ -17,6 +17,7 @@ export class PopoverComponent implements OnInit {
   constructor(private sendServiceDataService:SendServiceDataService) { }
   public language(message: string){
     this.setUserData(message);
+    Strings.user_lang = message;
     this.sendServiceDataService.setLang(message);
     this.sendServiceDataService.loadStrings(message).subscribe(
       (x:ConfigStrings)  => {

@@ -28,12 +28,9 @@ export class TabsPageModule {
   subject = new Subject<string>();
   constructor(public router: Router,public http: HttpClient,
               public generateURLtokenService: GenerateURLtokenService) {
-    this.router.events.subscribe(async event => {
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const token = await Storage.get({key: AUTH_TOKEN_KEY});
-        const val = JSON.parse(token.value);
-        const userid = val.user_id;
-        const urlstring = API_server_url + 'notification/tabs/?key=' + this.generateURLtokenService.getKey() + '&user_id=' + userid;
+        const urlstring = API_server_url + 'notification/tabs/?key=' + this.generateURLtokenService.getKey() + '&user_id=' + Strings.user_id;
         this.http.get(urlstring).subscribe(res => {
           this.subject.next(res[0].count_notification);
         });

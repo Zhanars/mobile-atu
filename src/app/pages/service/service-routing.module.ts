@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {Routes, RouterModule, NavigationEnd, Router} from '@angular/router';
 
 import { ServicePage } from './service.page';
 import {ReactiveFormsModule} from "@angular/forms";
@@ -23,4 +23,5 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 
-export class ServicePageRoutingModule {}
+export class ServicePageRoutingModule {
+}
