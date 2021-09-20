@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {PopoverController} from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import {Strings} from "../../classes/strings";
@@ -18,6 +18,11 @@ export class NotificationPage implements OnInit {
     private sendServiceDataService: SendServiceDataService,
     private router: Router
   ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.ngOnInit();
+      }
+    });
   }
 
   ngOnInit() {
