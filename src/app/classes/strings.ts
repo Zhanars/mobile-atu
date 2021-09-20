@@ -55,6 +55,7 @@ export class Strings {
   static yesText: string;
   static writeProblemText: string;
   static cancelText: string;
+  static tryitlaterText: string;
 
   static setString(x: ConfigStrings) {
     Object.keys(x).forEach(key => {
