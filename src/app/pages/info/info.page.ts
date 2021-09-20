@@ -1,7 +1,6 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import '@capacitor-community/http';
-import { Plugins } from '@capacitor/core';
 import {Strings} from "../../classes/strings";
 
 @Component({
@@ -21,7 +20,6 @@ export class InfoPage implements OnInit {
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
       this.barCode = barcodeData;
-      //   Barcode data {"cancelled":0,"text":"8413384010008","format":"EAN_13"}
     }).catch(err => {
       console.log('Error', err);
     });

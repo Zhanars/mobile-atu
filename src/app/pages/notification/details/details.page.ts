@@ -15,10 +15,7 @@ export class DetailsPage implements OnInit {
   title = '';
   constructor(private route: ActivatedRoute,private sendServiceDataService: SendServiceDataService) {
     const routeParams = this.route.snapshot.paramMap;
-    this.notificationId = Number(routeParams.get('productId'));}
-
-  ngOnInit() {
-
+    this.notificationId = Number(routeParams.get('productId'));
     this.sendServiceDataService.getNotificationForId(this.notificationId).subscribe(res => {
       this.notifications = res;
       for (let e of this.notifications) {
@@ -26,6 +23,10 @@ export class DetailsPage implements OnInit {
         this.title = e.title;
       }
     });
+  }
+
+  ngOnInit() {
+
   }
 
 

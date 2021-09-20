@@ -31,7 +31,7 @@ export class HomePage implements OnInit{
   home_page_url;
   constructor(private authService: AuthenticationService, private router: Router, private domSanitizer: DomSanitizer,
               private serviceDataService: SendServiceDataService,private http: HttpClient,private ionAlertService: IonAlertService) {
-    this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url[Strings.user_lang]);
+    this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl('');
   }
   ngOnInit() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
