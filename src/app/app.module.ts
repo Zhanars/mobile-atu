@@ -38,7 +38,7 @@ export class AppModule {
     this.loadStr();
   }
   loadStr() {
-    this.sendServiceDataService.loadStrings(Strings.lang).subscribe(
+    this.sendServiceDataService.loadStrings(Strings.user_lang).subscribe(
       (x: ConfigStrings) => {
         Strings.setString(x);
       }

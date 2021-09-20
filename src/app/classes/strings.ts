@@ -1,5 +1,4 @@
 import {ConfigStrings} from "../interfaces/config-strings";
-import {SendServiceDataService} from "../services/send-service-data.service";
 import {Userdata} from "../interfaces/userdata";
 
 export class Strings {
@@ -8,7 +7,7 @@ export class Strings {
   static iin: string;
   static email: string;
   static telephone: string;
-  static lang: string = 'ru';
+  static user_lang: string = 'ru';
   static sex: number;
   static token_firebase: string;
   static documentText: string;
@@ -62,7 +61,7 @@ export class Strings {
     Strings.telephone = x.telephone;
     Strings.user_id = x.user_id;
     Strings.sex = x.sex;
-    Strings.lang = x.lang;
+    Strings.user_lang = x.user_lang;
     Strings.token_firebase = x.token_firebase;
   }
 
@@ -71,7 +70,7 @@ export class Strings {
     Strings.iin = '';
     Strings.email = '';
     Strings.telephone = '';
-    Strings.lang = '';
+    Strings.user_lang = 'ru';
     Strings.token_firebase = '';
     Strings.user_id = 0;
     Strings.sex = 0;

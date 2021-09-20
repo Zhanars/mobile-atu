@@ -8,8 +8,12 @@ export const environment = {
   production: false
 };
 export const API_server_url = 'https://socket.atu.kz/api/';
-//export const HOME_page_url = 'https://atu.edu.kz/archives/category/news-ru/';
-export const HOME_page_url = '';
+export const HOME_page_url = {
+  'kz' : 'https://atu.edu.kz/archives/category/news-kk/',
+  'ru' : 'https://atu.edu.kz/archives/category/news-ru/',
+  'en' : 'https://atu.edu.kz/archives/category/news-en/'
+};
+//export const HOME_page_url = '';
 export const httpOptions = {
   headers: new HttpHeaders({
     'Accept': 'application/json',
