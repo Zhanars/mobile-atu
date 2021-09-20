@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package kz.atu.uit.smart;
 
 import com.getcapacitor.BridgeActivity;
 

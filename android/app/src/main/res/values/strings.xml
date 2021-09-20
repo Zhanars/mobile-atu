@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">mobile-atu</string>
     <string name="title_activity_main">mobile-atu</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">kz.atu.uit.smart</string>
+    <string name="custom_url_scheme">kz.atu.uit.smart</string>
 </resources>
