@@ -9,6 +9,7 @@ import {Strings} from "../../classes/strings";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {IonAlertService} from "../../services/ion-alert.service";
 import { AlertController } from '@ionic/angular';
+import {SendServiceDataService} from "../../services/send-service-data.service";
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -24,7 +25,8 @@ export class ProfilePage implements OnInit {
     private ionAlertService: IonAlertService,
     private ionLoaderService: IonLoaderService,
     public popoverController: PopoverController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private sendServiceDataService: SendServiceDataService
   ) {}
   showConfirm() {
     this.alertController.create({
@@ -106,6 +108,7 @@ export class ProfilePage implements OnInit {
     this.ionLoaderService.simpleLoader();
     this.ionLoaderService.dismissLoader();
     this.ionAlertService.showAlert(this.strings.successText, this.strings.successText);
+    this.sendServiceDataService.resetPasswordInUniver();
   }
 
 }
