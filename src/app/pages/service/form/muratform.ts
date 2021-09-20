@@ -334,5 +334,31 @@ this.form = this.fb.group({
   </ion-refresher>
 
 
+const alert = await this.alertController.create({
+      header: 'Опишите проблему',
+      inputs: [
+        {
+          name: 'problem',
+          type: 'textarea',
+          label: 'problem'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+    await alert.present();
 
 */

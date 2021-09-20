@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {AlertController} from "@ionic/angular";
 import {Router} from "@angular/router";
 import {Strings} from "../classes/strings";
+import {SendServiceDataService} from "./send-service-data.service";
+import {IonLoaderService} from "./ion-loader.service";
 
 
 @Injectable({
@@ -10,7 +12,11 @@ import {Strings} from "../classes/strings";
 export class IonAlertService {
 
   strings = Strings;
-  constructor(public alertController: AlertController, private router: Router) { }
+  constructor(
+    public alertController: AlertController,
+    private router: Router,
+    private ionLoaderService: IonLoaderService,
+    private sendServiceDataService: SendServiceDataService) { }
 
   showAlert(header, text, url = '') {
     this.alertController.create({
@@ -49,30 +55,58 @@ export class IonAlertService {
       res.present();
     });
   }
-
-  showPrompt() {
+  showConfirm2(header, text, OkBtn='OK',CancelBtn='Cancel') {
     this.alertController.create({
-      header: 'Prompt Alert',
-      subHeader: 'Enter information requested',
-      message: 'Enter your favorate place',
+      header: header,
+      message: text,
+      buttons: [
+        {
+          text: CancelBtn
+        },{
+          text: OkBtn,
+          handler: () => {
+            this.sendServiceDataService.resetPasswordInUniver();
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+
+  showPrompt(header:string, btnCnl:string, btnOk: string) {
+    this.alertController.create({
+      header: header,
       inputs: [
         {
-          name: 'Place',
-          placeholder: 'Eg.NY',
+          name: 'problem',
+          type: 'textarea',
+          label: 'problem'
 
         },
       ],
       buttons: [
         {
-          text: 'Cancel',
+          text: btnCnl,
           handler: (data: any) => {
             console.log('Canceled', data);
           }
         },
         {
-          text: 'Done!',
+          text: btnOk,
           handler: (data: any) => {
-            console.log('Saved Information', data);
+            this.ionLoaderService.customLoader();
+            this.sendServiceDataService.sendProblemText(data).subscribe(
+              (res) =>{
+                this.ionLoaderService.dismissLoader();
+                this.showAlert(Strings.successText, Strings.successSendFormText, '');
+            },
+              res => {
+                console.log(res);
+                this.showAlert(Strings.errorText, Strings.errorserverText, '');
+                this.ionLoaderService.dismissLoader();
+              }
+            );
             return data;
           }
         }

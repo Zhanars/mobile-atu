@@ -48,6 +48,13 @@ export class Strings {
   static gotoText: string;
   static hideText: string;
   static successSendFormText: string;
+  static contactSupportText: string;
+  static confirmationText: string;
+  static confirmResetUniverText: string;
+  static noText: string;
+  static yesText: string;
+  static writeProblemText: string;
+  static cancelText: string;
 
   static setString(x: ConfigStrings) {
     Object.keys(x).forEach(key => {

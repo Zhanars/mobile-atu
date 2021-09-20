@@ -8,8 +8,6 @@ import { PopoverComponent } from '../../components/popover/popover.component';
 import {Strings} from "../../classes/strings";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {IonAlertService} from "../../services/ion-alert.service";
-import { AlertController } from '@ionic/angular';
-import {SendServiceDataService} from "../../services/send-service-data.service";
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -22,74 +20,25 @@ export class ProfilePage implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private ionAlertService: IonAlertService,
     private ionLoaderService: IonLoaderService,
     public popoverController: PopoverController,
-    public alertController: AlertController,
-    private sendServiceDataService: SendServiceDataService
+    public ionAlertService: IonAlertService
   ) {}
-  showConfirm() {
-    this.alertController.create({
-      header: 'Подтверждение',
-      message: 'Вы точно хотите сбросить пароль от системы Univer?',
-      buttons: [
-        {
-          text: 'нет',
-          handler: () => {
-          }
-        },
-        {
-          text: 'да!',
-          handler: () => {
-            this.resetPasswordUniver();
-          }
-        }
-      ]
-    }).then(res => {
-      res.present();
-    });
-  }
-  async presentAlertCheckbox() {
-    const alert = await this.alertController.create({
 
-      header: 'Опишите проблему',
-      inputs: [
-        {
-          name: 'problem',
-          type: 'textarea',
-          label: 'problem'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: () => {
-            console.log('Confirm Ok');
-          }
-        }
-      ]
-    });
-    await alert.present();
+  presentAlertCheckbox() {
+    this.ionAlertService.showPrompt(Strings.writeProblemText, Strings.cancelText, Strings.sendText);
   }
-
   async presentPopover(eve) {
     const popover = await this.popoverController.create({
       component: PopoverComponent,
       componentProps: {
-              },
+      },
       cssClass: 'popOver',
       event: eve,
       mode:'ios',
       translucent: true
     });
-   await popover.present();
+    await popover.present();
   }
   ngOnInit() {
   }
@@ -104,12 +53,9 @@ export class ProfilePage implements OnInit {
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
-  async resetPasswordUniver() {
-    this.ionLoaderService.simpleLoader();
-    this.ionLoaderService.dismissLoader();
-    this.ionAlertService.showAlert(this.strings.successText, this.strings.successText);
-    this.sendServiceDataService.resetPasswordInUniver();
-  }
+  resetPasswordUniver() {
+    this.ionAlertService.showConfirm2(Strings.confirmationText, Strings.confirmResetUniverText, Strings.yesText, Strings.noText);
 
+  }
 }
 

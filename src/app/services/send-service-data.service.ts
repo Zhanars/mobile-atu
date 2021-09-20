@@ -71,5 +71,10 @@ export class SendServiceDataService {
     console.log(url);
     this.http.get(url).subscribe();
   }
+  sendProblemText(send_data: any) {
+    let urlstring = API_server_url + 'problem/insert.php?key=' + GenerateURLtokenService.getKey() + "&user_id=" + Strings.user_id;
+    console.log(urlstring);
+    return this.http.post(urlstring, new URLSearchParams(send_data), httpOptions);
+  }
 
 }

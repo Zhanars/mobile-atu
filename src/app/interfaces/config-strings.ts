@@ -7,7 +7,14 @@ export interface ConfigStrings {
   gotoText: string;
   hideText: string;
   successSendFormText: string;
-  lang
+  contactSupportText: string;
+  confirmationText: string;
+  confirmResetUniverText: string;
+  noText: string;
+  yesText: string;
+  writeProblemText: string;
+  cancelText: string;
+  user_lang
   documentText
   transcriptText
   schedule_subjectText
