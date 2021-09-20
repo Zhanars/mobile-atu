@@ -13,6 +13,7 @@ export interface ConfigStrings {
   noText: string;
   yesText: string;
   writeProblemText: string;
+  tryitlaterText: string;
   cancelText: string;
   user_lang
   documentText

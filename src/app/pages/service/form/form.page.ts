@@ -38,7 +38,7 @@ export class FormPage {
         this.service_label = data.service_label;
         if (data.message != '1') {
           this.ionLoaderService.dismissLoader();
-          this.ionAlertService.showAlert(Strings.errorText, data.message, 'tabs/service');
+          this.ionAlertService.showAlert(Strings.errorText, Strings.tryitlaterText, 'tabs/service');
         }
         this.setupForm(data.array_input);
         this.setupForm(data.array_select);
