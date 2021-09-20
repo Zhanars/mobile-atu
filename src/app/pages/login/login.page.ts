@@ -3,7 +3,7 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Storage} from "@capacitor/storage";
-import {AUTH_TOKEN_KEY} from "../../../environments/environment";
+import {AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
 import {IonAlertService} from "../../services/ion-alert.service";
 import {IonLoaderService} from "../../services/ion-loader.service";
 import {PushNotifications, Token} from "@capacitor/push-notifications";
@@ -11,13 +11,17 @@ import {Capacitor} from "@capacitor/core";
 import {Strings} from "../../classes/strings";
 import {ConfigStrings} from "../../interfaces/config-strings";
 import {SendServiceDataService} from "../../services/send-service-data.service";
-
+import {AlertController} from "@ionic/angular";
+import { HttpClient } from '@angular/common/http';
+import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
+import {subscribeToArray} from "rxjs/internal-compatibility";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  recoveryiin;
   strings = Strings;
   credentials: FormGroup;
   data = {
@@ -25,14 +29,81 @@ export class LoginPage implements OnInit {
     password: '',
     token_firebase: ''
   };
+
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               public ionLoaderService: IonLoaderService,
               private sendServiceDataService:SendServiceDataService,
               private router: Router,
-              private ionAlertService: IonAlertService) {
+              private ionAlertService: IonAlertService,
+              public alertController: AlertController,
+              private http: HttpClient,) {
 
   }
+  async okiin(message) {
+    const alert = await this.alertController.create({
+      header: 'Внимание',
+      message: message+'',
+      buttons: ['OK']
+    });
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+ async notcorrectiin() {
+    const alert = await this.alertController.create({
+      header: 'Ошибка',
+      message: 'Не корректный ИИН, попробуйте ввести заново',
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+
+  async resetpassword() {
+    const alert = await this.alertController.create({
+
+      header: 'Для сброса пароля введите свой ИИН и нажмите ОК',
+      inputs: [
+        {
+          name: 'resetpass',
+          type: 'number',
+          label: 'resetpass'
+        },
+      ],
+      buttons: [
+         {
+          text: 'Ok',
+          handler: datas  => {
+            if(datas.resetpass != null && datas.resetpass.length == 12){
+              const urlstring = "https://socket.atu.kz/api/profile/forgotpasswordmobile/" + '?key=' + GenerateURLtokenService.getKey() + '&iin=' + datas.resetpass;
+              console.log(urlstring);
+              return this.http.post(urlstring, new URLSearchParams({'iin':  datas.resetpass}), httpOptions)
+              .subscribe(
+                (val) => {
+                  if(val['code']==2){
+                    this.okiin(val['text']);
+                  }
+                  else if (val['code']==1){
+                    this.okiin(val['email']+' '+val['text']);
+                  }
+                  },
+            );
+
+               }else{
+               this.notcorrectiin();
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
