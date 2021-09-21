@@ -9,7 +9,6 @@ export interface ConfigStrings {
   incorrectIINText: string;
   warningText: string;
   enterIINandOkText: string;
-  resetPasswordMobileText: string;
   hideText: string;
   successSendFormText: string;
   contactSupportText: string;

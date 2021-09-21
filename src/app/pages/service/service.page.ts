@@ -23,6 +23,7 @@ export class ServicePage implements OnInit {
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+        console.clear();
         this.loadData();
       }
     });
