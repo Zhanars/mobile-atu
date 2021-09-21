@@ -16,8 +16,8 @@ import {Strings} from "../../classes/strings";
 export class SafePipe implements PipeTransform {
 
   constructor(private sanitizer: DomSanitizer) {}
-  transform(HOME_page_url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(HOME_page_url);
+  transform(page_url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(page_url);
   }
 }
 @Component({
@@ -31,7 +31,9 @@ export class HomePage implements OnInit{
   home_page_url;
   constructor(private authService: AuthenticationService, private router: Router, private domSanitizer: DomSanitizer,
               private serviceDataService: SendServiceDataService,private http: HttpClient,private ionAlertService: IonAlertService) {
-    this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl('');
+    console.log(HOME_page_url[Strings.user_lang]);
+    //this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url[Strings.user_lang]);
+    this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl('https://live.atu.kz');
   }
   ngOnInit() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
