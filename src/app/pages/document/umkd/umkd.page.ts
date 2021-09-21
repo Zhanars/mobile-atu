@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import {Component, NgZone} from '@angular/core';
 import {Subject} from "./subject";
 import {Strings} from "../../../classes/strings";
 import {SendServiceDataService} from "../../../services/send-service-data.service";
@@ -15,6 +15,7 @@ export class UmkdPage{
   strings = Strings;
   constructor(
     private sendServiceDataService: SendServiceDataService,
+    private ngZone: NgZone,
     private readonly ionLoaderService: IonLoaderService
   ) {
     this.loadData();
@@ -36,7 +37,7 @@ export class UmkdPage{
   }
   loadData() {
     this.ionLoaderService.customLoader();
-    this.sendServiceDataService.getUMKD().subscribe((data: any) => {  this.items = data;  }  );
+    this.ngZone.run(() => { this.sendServiceDataService.getUMKD().subscribe((data: any) => {  this.items = data;  }  );});
     this.ionLoaderService.dismissLoader();
   }
   doRefresh(refresher) {

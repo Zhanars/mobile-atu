@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {LoadingController} from '@ionic/angular';
 import {NavigationEnd, Router} from "@angular/router";
 import {Service} from "./service";
@@ -19,7 +19,7 @@ export class ServicePage implements OnInit {
   constructor(private router: Router,
               private readonly loadingCtrl: LoadingController,
               private sendServiceDataService: SendServiceDataService,
-              private readonly ionLoaderService: IonLoaderService
+              private readonly ngZone: NgZone
   ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -44,7 +44,7 @@ export class ServicePage implements OnInit {
     });
   }
   loadData() {
-    this.sendServiceDataService.getServices().subscribe(      (data:any)=> { this.items = data; }    );
+    this.ngZone.run(() => {this.sendServiceDataService.getServices().subscribe(      (data:any)=> { this.items = data; }    );});
   }
 
   doRefresh(event) {

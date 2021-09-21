@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Strings} from "../../../classes/strings";
 import {SendServiceDataService} from "../../../services/send-service-data.service";
@@ -13,15 +13,17 @@ export class DetailsPage implements OnInit {
   notificationId: number;
   notifications = [];
   title = '';
-  constructor(private route: ActivatedRoute,private sendServiceDataService: SendServiceDataService) {
+  constructor(private route: ActivatedRoute, private ngZone: NgZone, private sendServiceDataService: SendServiceDataService) {
     const routeParams = this.route.snapshot.paramMap;
     this.notificationId = Number(routeParams.get('productId'));
-    this.sendServiceDataService.getNotificationForId(this.notificationId).subscribe(res => {
-      this.notifications = res;
-      for (let e of this.notifications) {
-        console.log(res);
-        this.title = e.title;
-      }
+    this.ngZone.run(() => {
+      this.sendServiceDataService.getNotificationForId(this.notificationId).subscribe(res => {
+        this.notifications = res;
+        for (let e of this.notifications) {
+          console.log(res);
+          this.title = e.title;
+        }
+      });
     });
   }
 

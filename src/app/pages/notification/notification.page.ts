@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {PopoverController} from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
@@ -16,18 +16,21 @@ export class NotificationPage implements OnInit {
     private http: HttpClient,
     private popoverCtrl: PopoverController,
     private sendServiceDataService: SendServiceDataService,
+    private ngZone: NgZone,
     private router: Router
   ) {
   }
 
   ngOnInit() {
-    this.sendServiceDataService.getNotification().subscribe(res => {
-      this.emails = res;
-      for (let e of this.emails) {
-        // Create a custom color for every email
-        console.log(res);
-        e.color = this.intToRGB(this.hashCode(e.title));
-      }
+    this.ngZone.run(() => {
+      this.sendServiceDataService.getNotification().subscribe(res => {
+        this.emails = res;
+        for (let e of this.emails) {
+          // Create a custom color for every email
+          console.log(res);
+          e.color = this.intToRGB(this.hashCode(e.title));
+        }
+      });
     });
   }
   openDetails(id,read) {

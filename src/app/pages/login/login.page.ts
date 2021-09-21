@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -14,14 +14,12 @@ import {SendServiceDataService} from "../../services/send-service-data.service";
 import {AlertController} from "@ionic/angular";
 import { HttpClient } from '@angular/common/http';
 import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
-import {subscribeToArray} from "rxjs/internal-compatibility";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  recoveryiin;
   strings = Strings;
   credentials: FormGroup;
   data = {
@@ -36,6 +34,7 @@ export class LoginPage implements OnInit {
               private sendServiceDataService:SendServiceDataService,
               private router: Router,
               private ionAlertService: IonAlertService,
+              private ngZone: NgZone,
               public alertController: AlertController,
               private http: HttpClient,) {
 
@@ -169,18 +168,18 @@ export class LoginPage implements OnInit {
         } else {
           this.authService.isAuthenticated.next(false);
           this.ionLoaderService.dismissLoader();
-          this.ionAlertService.showAlert(Strings.errorText, Strings.errorloginText, '');
+          this.ngZone.run(() => { this.ionAlertService.showAlert(Strings.errorText, Strings.errorloginText, '');});
         }
       },
       res => {
         this.ionLoaderService.dismissLoader();
         this.authService.isAuthenticated.next(false);
-        this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, '');
+        this.ngZone.run(() => { this.ionAlertService.showAlert(Strings.errorText, Strings.errorserverText, '');});
       }
     );
     this.authService.isAuthenticated.asObservable().subscribe(s=>{
       if (s)
-        this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
+        this.ngZone.run(() => { this.router.navigateByUrl('/tabs/home', { replaceUrl: true });});
     });
 
   }
