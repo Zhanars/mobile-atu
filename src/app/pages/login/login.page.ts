@@ -19,6 +19,7 @@ import {SendServiceDataService} from "../../services/send-service-data.service";
 import {AlertController} from "@ionic/angular";
 import { HttpClient } from '@angular/common/http';
 import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
+import { FCM } from "@capacitor-community/fcm";
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -43,6 +44,9 @@ export class LoginPage implements OnInit {
               public alertController: AlertController) {
 
   }
+
+
+
   async resetpassword() {
     const alert = await this.alertController.create({
       header: Strings.enterIINandOkText,
@@ -77,10 +81,13 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
   ngOnInit() {
+
+
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
   }
   login() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
@@ -90,6 +97,7 @@ export class LoginPage implements OnInit {
         if (result.receive === 'granted') {
           // Register with Apple / Google to receive push via APNS/FCM
           PushNotifications.register();
+          console.log('fsdfsfsdfs111');
         } else {
           console.log('fsdfsfsdfs');
         }
@@ -97,7 +105,12 @@ export class LoginPage implements OnInit {
 
       PushNotifications.addListener('registration',
         (token: Token) => {
-          this.setTokenFirebase(token.value);
+        console.log('token.value');
+          FCM.getToken()
+            .then((r) => {
+              console.log('sdsds' + r.token);
+              this.setTokenFirebase(r.token);
+            });
         }
       );
 
@@ -106,6 +119,7 @@ export class LoginPage implements OnInit {
     }
 
   }
+
 
   // Easy access for form fields
   get email() {

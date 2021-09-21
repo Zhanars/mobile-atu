@@ -23,6 +23,7 @@
     "@angular/router": "~12.1.1",
     "@angular/service-worker": "~12.1.1",
     "@auth0/angular-jwt": "^5.0.2",
+    "@capacitor-community/fcm": "^2.0.1",
     "@capacitor-community/http": "^1.2.0",
     "@capacitor-community/media": "^1.0.1",
     "@capacitor/android": "3.2.3",

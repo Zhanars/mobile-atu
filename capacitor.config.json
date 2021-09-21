@@ -2,5 +2,9 @@
 	"appId": "kz.atu.uit.smart",
 	"appName": "Smart ATU",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+  "plugins" :
+  {
+  "PushNotifications": ["badge", "sound", "alert"]
+  }
 }
