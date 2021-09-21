@@ -20,7 +20,6 @@ export class ProfilePage implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private ionLoaderService: IonLoaderService,
     public popoverController: PopoverController,
     public ionAlertService: IonAlertService
   ) {}

@@ -18,11 +18,6 @@ export class NotificationPage implements OnInit {
     private sendServiceDataService: SendServiceDataService,
     private router: Router
   ) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.ngOnInit();
-      }
-    });
   }
 
   ngOnInit() {
@@ -30,7 +25,7 @@ export class NotificationPage implements OnInit {
       this.emails = res;
       for (let e of this.emails) {
         // Create a custom color for every email
-        console.log('sad');
+        console.log(res);
         e.color = this.intToRGB(this.hashCode(e.title));
       }
     });

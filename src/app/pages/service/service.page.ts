@@ -48,6 +48,6 @@ export class ServicePage implements OnInit {
   }
 
   doRefresh(event) {
-    setTimeout(() => { this.loadData(); event.target.complete();}, 2000);
+    setTimeout(() => { this.loadData(); event.target.complete();}, 1000);
   }
 }
