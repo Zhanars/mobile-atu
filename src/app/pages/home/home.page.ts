@@ -32,8 +32,7 @@ export class HomePage implements OnInit{
   constructor(private authService: AuthenticationService, private router: Router, private domSanitizer: DomSanitizer,
               private serviceDataService: SendServiceDataService,private http: HttpClient,private ionAlertService: IonAlertService) {
     console.log(HOME_page_url[Strings.user_lang]);
-    //this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url[Strings.user_lang]);
-    this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl('https://live.atu.kz');
+    this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url[Strings.user_lang]);
   }
   ngOnInit() {
     const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
