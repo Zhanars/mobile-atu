@@ -100,17 +100,7 @@ export class LoginPage implements OnInit {
           this.setTokenFirebase(token.value);
         }
       );
-      PushNotifications.addListener('pushNotificationActionPerformed',
-        (notification: PushNotificationActionPerformed) => {
-          this.router.navigateByUrl('/tabs/notification', { replaceUrl:true });
-        }
-      );
 
-      PushNotifications.addListener('pushNotificationReceived',
-        (notification: PushNotification) => {
-          this.ionAlertService.showConfirm(Strings.gotMessageText, notification.body, 'tabs/notification',Strings.gotoText,Strings.hideText);
-        }
-      );
     } else {
       this.setTokenFirebase('web');
     }

@@ -1,6 +1,6 @@
 {
 	"appId": "kz.atu.uit.smart",
-	"appName": "mobile-atu",
+	"appName": "Smart ATU",
 	"webDir": "www",
 	"bundledWebRuntime": false
 }
