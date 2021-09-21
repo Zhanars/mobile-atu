@@ -1,5 +1,6 @@
 export interface ConfigStrings {
   loadingformText: string;
+  resetPasswordMobileText: string;
   errorloginText: string;
   errorserverText: string;
   errorText: string;

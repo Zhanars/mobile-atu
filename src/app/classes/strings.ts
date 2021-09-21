@@ -56,6 +56,7 @@ export class Strings {
   static writeProblemText: string;
   static cancelText: string;
   static tryitlaterText: string;
+  static resetPasswordMobileText: string;
 
   static setString(x: ConfigStrings) {
     Object.keys(x).forEach(key => {
