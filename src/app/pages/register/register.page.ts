@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {RegistrationService} from "../../services/registration.service";
@@ -19,6 +19,7 @@ export class RegisterPage implements OnInit {
               private RegService: RegistrationService,
               public ionLoaderService: IonLoaderService,
               private ionAlertService: IonAlertService,
+              private ngZone: NgZone,
               private router: Router) {
 
   }
@@ -36,9 +37,10 @@ export class RegisterPage implements OnInit {
     this.RegService.register(this.credentials.value).subscribe(
       res => {
         this.ionLoaderService.dismissLoader();
-        this.ionAlertService.showAlert(Strings.errorText, res.text, '');
         if (res.code == 11)
-        this.router.navigateByUrl('/login', { replaceUrl: true });
+          this.ngZone.run(() => {this.router.navigateByUrl('/login', { replaceUrl: true });});
+        console.log(res);
+        this.ionAlertService.showAlert(Strings.errorText, res.text, '');
       },
       res => {
         this.ionLoaderService.dismissLoader();
