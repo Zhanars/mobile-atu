@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 
 import {Plugins} from "@capacitor/core";
 import { IonRouterOutlet, Platform } from '@ionic/angular';
@@ -17,25 +17,21 @@ countNotifications='0';
   constructor(private platform: Platform,
               private routerOutlet: IonRouterOutlet,
               private sendServiceDataService:SendServiceDataService,
+              private ngZone:NgZone,
               public tubsPage: TabsPageModule) {
     this.platform.backButton.subscribeWithPriority(-1, () => {
       if (!this.routerOutlet.canGoBack()) {
         App.exitApp();
       }
     });
-    this.tubsPage.subject.asObservable().subscribe(s=>{
-      this.countNotifications = s;
-    });
+    this.ngZone.run(() => {this.tubsPage.subject.asObservable().subscribe(s=>{   this.countNotifications = s;    });  });
   }
    ngOnInit() {
      this.loadStr();
   }
 
   loadStr() {
-    this.sendServiceDataService.loadStrings(Strings.user_lang).subscribe(
-      (x: ConfigStrings) => {
-        Strings.setString(x);
-      }
-    );
+    this.ngZone.run(() => {this.sendServiceDataService.loadStrings(Strings.user_lang).subscribe(      (x: ConfigStrings) => {        Strings.setString(x);      }); });
+
   }
 }

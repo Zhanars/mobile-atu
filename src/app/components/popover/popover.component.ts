@@ -4,6 +4,7 @@ import {SendServiceDataService} from "../../services/send-service-data.service";
 import {Strings} from "../../classes/strings";
 import {Storage} from "@capacitor/storage";
 import {AUTH_TOKEN_KEY} from "../../../environments/environment";
+import {IonLoaderService} from "../../services/ion-loader.service";
 
 
 @Component({
@@ -14,8 +15,9 @@ import {AUTH_TOKEN_KEY} from "../../../environments/environment";
 
 export class PopoverComponent implements OnInit {
 
-  constructor(private sendServiceDataService:SendServiceDataService) { }
+  constructor(private sendServiceDataService:SendServiceDataService, private ionLoaderService:IonLoaderService) { }
   public language(message: string){
+    this.ionLoaderService.simpleLoader();
     this.setUserData(message);
     Strings.user_lang = message;
     this.sendServiceDataService.setLang(message);
@@ -24,6 +26,7 @@ export class PopoverComponent implements OnInit {
         Strings.setString(x);
       }
     );
+    this.ionLoaderService.dismissLoader();
   }
   async setUserData(message: string) {
     const token = await Storage.get({key: AUTH_TOKEN_KEY});
