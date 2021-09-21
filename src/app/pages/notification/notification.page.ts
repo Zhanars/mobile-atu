@@ -1,5 +1,5 @@
 import {Component, NgZone, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {PopoverController} from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import {Strings} from "../../classes/strings";
@@ -12,6 +12,7 @@ import {SendServiceDataService} from "../../services/send-service-data.service";
 export class NotificationPage implements OnInit {
   strings = Strings;
   emails = [];
+  element: HTMLElement;
   constructor(
     private http: HttpClient,
     private popoverCtrl: PopoverController,
@@ -34,9 +35,11 @@ export class NotificationPage implements OnInit {
     });
   }
   openDetails(id,read) {
-    this.router.navigate([ 'tabs/notification/details', id]);
     if(!read)
     this.setReadedStatus(id);
+    this.element = document.getElementById('notificationLabel' + id) as HTMLElement;
+    this.element.style.fontWeight = '';
+    this.router.navigate([ 'tabs/notification/details', id]);
   }
   private hashCode(str) {
     let hash = 0;

@@ -28,7 +28,7 @@
           </div>
         </ion-col>
         <ion-col size="8" (click)="openDetails(m.notification_id,m.read)">
-          <ion-label color="dark" class="ion-text-wrap ion-text-capitalize" [style.font-weight]="!m.read ? 'bold' : ''">
+          <ion-label [style.font-weight]="!m.read ? 'bold' : ''" class="ion-text-wrap ion-text-capitalize" color="dark" id="notificationLabel{{m.notification_id}}">
             {{ m.title.split('@')[0] }}
             <p class="excerpt" [innerHTML]="(m.message.length>80)? (m.message | slice:0:80)+'...':(m.message)">
               {{ (m.message.length>50)? (m.message | slice:0:50)+'...':(m.message) }}
