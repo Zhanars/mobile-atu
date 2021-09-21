@@ -5,6 +5,10 @@ export interface ConfigStrings {
   errorText: string;
   gotMessageText: string;
   gotoText: string;
+  incorrectIINText: string;
+  warningText: string;
+  enterIINandOkText: string;
+  resetPasswordMobileText: string;
   hideText: string;
   successSendFormText: string;
   contactSupportText: string;

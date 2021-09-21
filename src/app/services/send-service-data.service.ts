@@ -71,6 +71,11 @@ export class SendServiceDataService {
     console.log(url);
     this.http.get(url).subscribe();
   }
+  resetMobilePassword(iin) {
+    const urlstring = API_server_url + "/profile/forgotpasswordmobile/?key=" + GenerateURLtokenService.getKey() + '&iin=' + iin;
+    console.log(urlstring);
+    return this.http.get(urlstring);
+  }
   sendProblemText(send_data: any) {
     let urlstring = API_server_url + 'problem/insert.php?key=' + GenerateURLtokenService.getKey() + "&user_id=" + Strings.user_id;
     console.log(urlstring);

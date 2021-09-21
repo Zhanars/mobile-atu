@@ -3,10 +3,15 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Storage} from "@capacitor/storage";
-import {AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
+import {API_server_url, AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
 import {IonAlertService} from "../../services/ion-alert.service";
 import {IonLoaderService} from "../../services/ion-loader.service";
-import {PushNotifications, Token} from "@capacitor/push-notifications";
+import {
+  PushNotification,
+  PushNotificationActionPerformed,
+  PushNotifications,
+  Token
+} from "@capacitor/push-notifications";
 import {Capacitor} from "@capacitor/core";
 import {Strings} from "../../classes/strings";
 import {ConfigStrings} from "../../interfaces/config-strings";
@@ -35,36 +40,12 @@ export class LoginPage implements OnInit {
               private router: Router,
               private ionAlertService: IonAlertService,
               private ngZone: NgZone,
-              public alertController: AlertController,
-              private http: HttpClient,) {
+              public alertController: AlertController) {
 
   }
-  async okiin(message) {
-    const alert = await this.alertController.create({
-      header: 'Внимание',
-      message: message+'',
-      buttons: ['OK']
-    });
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-  }
- async notcorrectiin() {
-    const alert = await this.alertController.create({
-      header: 'Ошибка',
-      message: 'Не корректный ИИН, попробуйте ввести заново',
-      buttons: ['OK']
-    });
-
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-  }
-
   async resetpassword() {
     const alert = await this.alertController.create({
-
-      header: 'Для сброса пароля введите свой ИИН и нажмите ОК',
+      header: Strings.enterIINandOkText,
       inputs: [
         {
           name: 'resetpass',
@@ -77,22 +58,17 @@ export class LoginPage implements OnInit {
           text: 'Ok',
           handler: datas  => {
             if(datas.resetpass != null && datas.resetpass.length == 12){
-              const urlstring = "https://socket.atu.kz/api/profile/forgotpasswordmobile/" + '?key=' + GenerateURLtokenService.getKey() + '&iin=' + datas.resetpass;
-              console.log(urlstring);
-              return this.http.post(urlstring, new URLSearchParams({'iin':  datas.resetpass}), httpOptions)
-              .subscribe(
+              this.sendServiceDataService.resetMobilePassword(datas.resetpass).subscribe(
                 (val) => {
-                  if(val['code']==2){
-                    this.okiin(val['text']);
+                  if (val['code'] == 2) {
+                    this.ionAlertService.showAlert(Strings.warningText, val['text']);
+                  } else if (val['code'] == 1) {
+                    this.ionAlertService.showAlert(Strings.warningText, val['email'] + ' ' +val['text']);
                   }
-                  else if (val['code']==1){
-                    this.okiin(val['email']+' '+val['text']);
-                  }
-                  },
+                },
             );
-
                }else{
-               this.notcorrectiin();
+              this.ionAlertService.showAlert(Strings.errorText, Strings.incorrectIINText);
             }
           }
         }
@@ -100,9 +76,6 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   }
-
-
-
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -118,14 +91,24 @@ export class LoginPage implements OnInit {
           // Register with Apple / Google to receive push via APNS/FCM
           PushNotifications.register();
         } else {
-          ///fsdfsfsdfs
+          console.log('fsdfsfsdfs');
         }
       });
 
-      // On success, we should be able to receive notifications
       PushNotifications.addListener('registration',
         (token: Token) => {
           this.setTokenFirebase(token.value);
+        }
+      );
+      PushNotifications.addListener('pushNotificationActionPerformed',
+        (notification: PushNotificationActionPerformed) => {
+          this.router.navigateByUrl('/tabs/notification', { replaceUrl:true });
+        }
+      );
+
+      PushNotifications.addListener('pushNotificationReceived',
+        (notification: PushNotification) => {
+          this.ionAlertService.showConfirm(Strings.gotMessageText, notification.body, 'tabs/notification',Strings.gotoText,Strings.hideText);
         }
       );
     } else {
