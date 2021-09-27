@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { UmkdPageRoutingModule } from './umkd-routing.module';
-import { RouterModule } from '@angular/router';
 import { UmkdPage } from './umkd.page';
 import { ExpandableComponent } from '../../../components/expandable/expandable.component';
 
@@ -14,12 +13,6 @@ import { ExpandableComponent } from '../../../components/expandable/expandable.c
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: UmkdPage,
-      },
-    ]),
     UmkdPageRoutingModule
   ],
   declarations: [UmkdPage,ExpandableComponent]

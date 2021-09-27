@@ -4,7 +4,7 @@ export interface Userdata {
   iin:string,
   email:string,
   telephone:string,
-  user_id:number,
+  user_id:string,
   sex: number,
   token_firebase: string
 }

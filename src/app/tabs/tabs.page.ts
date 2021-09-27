@@ -19,11 +19,6 @@ countNotifications='0';
               private sendServiceDataService:SendServiceDataService,
               private ngZone:NgZone,
               public tubsPage: TabsPageModule) {
-    this.platform.backButton.subscribeWithPriority(-1, () => {
-      if (!this.routerOutlet.canGoBack()) {
-        App.exitApp();
-      }
-    });
     this.ngZone.run(() => {this.tubsPage.subject.asObservable().subscribe(s=>{   this.countNotifications = s;    });  });
   }
    ngOnInit() {

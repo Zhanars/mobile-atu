@@ -13,7 +13,16 @@ export class DetailsPage implements OnInit {
   notificationId: number;
   notifications = [];
   title = '';
-  constructor(private route: ActivatedRoute, private ngZone: NgZone, private sendServiceDataService: SendServiceDataService) {
+  constructor(private route: ActivatedRoute,
+              private ngZone: NgZone,
+              private sendServiceDataService: SendServiceDataService) {
+    this.loadData();
+  }
+
+  ngOnInit() {
+
+  }
+  loadData(){
     const routeParams = this.route.snapshot.paramMap;
     this.notificationId = Number(routeParams.get('productId'));
     this.ngZone.run(() => {
@@ -27,9 +36,12 @@ export class DetailsPage implements OnInit {
     });
   }
 
-  ngOnInit() {
 
+  doRefresh(refresher) {
+    this.loadData();
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
   }
-
 
 }

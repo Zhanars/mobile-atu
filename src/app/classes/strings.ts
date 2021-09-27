@@ -2,7 +2,7 @@ import {ConfigStrings} from "../interfaces/config-strings";
 import {Userdata} from "../interfaces/userdata";
 
 export class Strings {
-  static user_id: number;
+  static user_id: string;
   static username: string;
   static iin: string;
   static email: string;
@@ -19,12 +19,12 @@ export class Strings {
   static QRText: string;
   static QRIONText: string;
   static QRbuttonText: string;
-  static authFormText: string;
-  static emptyText: string;
-  static incorrectText: string;
-  static passwordText: string;
-  static loginbuttonText: string;
-  static createaccountText: string;
+  static authFormText: string = 'Форма авторизации';
+  static emptyText: string = 'пустое';
+  static incorrectText: string = 'некорректное';
+  static passwordText: string = 'Пароль';
+  static loginbuttonText: string = 'Войти';
+  static createaccountText: string = 'Создать аккаунт';
   static notificationText: string;
   static profileText: string;
   static reseeIntroText: string;
@@ -36,30 +36,30 @@ export class Strings {
   static phonenumberText: string;
   static servicesText: string;
   static sendText: string;
-  static simpleLoaderText: string;
-  static customLoaderText: string;
-  static successText: string;
-  static errorText: string;
-  static errorserverText: string;
-  static loadingformText: string;
-  static errorloginText: string;
+  static simpleLoaderText: string = 'Загрузка';
+  static customLoaderText: string = 'Загрузка данных';
+  static successText: string = 'Удачно';
+  static errorText: string = 'Ошибка';
+  static errorserverText: string = 'Сервер недоступен, попробуйте позже';
+  static loadingformText: string = 'Загрузка формы';
+  static errorloginText: string = 'Email или пароль не правильный';
   static sendFormErrorText: string;
   static gotMessageText: string;
   static gotoText: string;
   static hideText: string;
-  static successSendFormText: string;
+  static successSendFormText: string = 'Заявка отправлена на рассмотрение';
   static contactSupportText: string;
   static confirmationText: string;
   static confirmResetUniverText: string;
   static noText: string;
   static yesText: string;
   static writeProblemText: string;
-  static cancelText: string;
-  static tryitlaterText: string;
-  static resetPasswordMobileText: string;
-  static incorrectIINText: string;
-  static warningText: string;
-  static enterIINandOkText: string;
+  static cancelText: string = 'Отмена';
+  static tryitlaterText: string = 'Услуга в стадии разработки, попробуйте позже';
+  static resetPasswordMobileText: string = 'Восстановить пароль';
+  static incorrectIINText: string = 'Не корректный ИИН, попробуйте ввести заново';
+  static warningText: string = 'Внимание';
+  static enterIINandOkText: string = 'Для сброса пароля введите свой ИИН и нажмите ОК';
 
   static setString(x: ConfigStrings) {
     Object.keys(x).forEach(key => {
@@ -78,8 +78,7 @@ export class Strings {
     Strings.telephone = '';
     Strings.user_lang = 'ru';
     Strings.token_firebase = '';
-    Strings.user_id = 0;
+    Strings.user_id = '0';
     Strings.sex = 0;
-    return true;
   }
 }

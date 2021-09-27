@@ -3,22 +3,15 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Storage} from "@capacitor/storage";
-import {API_server_url, AUTH_TOKEN_KEY, httpOptions} from "../../../environments/environment";
+import {AUTH_TOKEN_KEY} from "../../../environments/environment";
 import {IonAlertService} from "../../services/ion-alert.service";
 import {IonLoaderService} from "../../services/ion-loader.service";
-import {
-  PushNotification,
-  PushNotificationActionPerformed,
-  PushNotifications,
-  Token
-} from "@capacitor/push-notifications";
+import { PushNotifications, Token} from "@capacitor/push-notifications";
 import {Capacitor} from "@capacitor/core";
 import {Strings} from "../../classes/strings";
 import {ConfigStrings} from "../../interfaces/config-strings";
 import {SendServiceDataService} from "../../services/send-service-data.service";
 import {AlertController} from "@ionic/angular";
-import { HttpClient } from '@angular/common/http';
-import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
 import { FCM } from "@capacitor-community/fcm";
 @Component({
   selector: 'app-login',
@@ -105,15 +98,14 @@ export class LoginPage implements OnInit {
 
       PushNotifications.addListener('registration',
         (token: Token) => {
-        console.log('token.value');
-          FCM.getToken()
+            console.log(token.value);
+            FCM.getToken()
             .then((r) => {
               console.log('sdsds' + r.token);
               this.setTokenFirebase(r.token);
             });
         }
       );
-
     } else {
       this.setTokenFirebase('web');
     }

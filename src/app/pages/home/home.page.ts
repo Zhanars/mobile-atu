@@ -6,6 +6,7 @@ import {HOME_page_url} from '../../../environments/environment';
 import {Strings} from "../../classes/strings";
 import {PushNotification, PushNotificationActionPerformed, PushNotifications} from "@capacitor/push-notifications";
 import {IonAlertService} from "../../services/ion-alert.service";
+import {Capacitor} from "@capacitor/core";
 
 @Pipe({ name: 'safe' })
 
@@ -30,17 +31,20 @@ export class HomePage implements OnInit{
     this.home_page_url = this.domSanitizer.bypassSecurityTrustResourceUrl(HOME_page_url[Strings.user_lang]);
   }
   ngOnInit() {
-    PushNotifications.addListener('pushNotificationActionPerformed',
-      (notification: PushNotificationActionPerformed) => {
-        this.router.navigateByUrl('/tabs/notification', { replaceUrl:true });
-      }
-    );
 
-    PushNotifications.addListener('pushNotificationReceived',
-      (notification: PushNotification) => {
-        this.ionAlertService.showConfirm(Strings.gotMessageText, notification.body, 'tabs/notification',Strings.gotoText,Strings.hideText);
-      }
-    );
+    const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications');
+    if (isPushNotificationsAvailable) {
+      PushNotifications.addListener('pushNotificationActionPerformed',
+        (notification: PushNotificationActionPerformed) => {
+          this.router.navigateByUrl('/tabs/notification', {replaceUrl: true});
+        }
+      );
+      PushNotifications.addListener('pushNotificationReceived',
+        (notification: PushNotification) => {
+          this.ionAlertService.showConfirm(Strings.gotMessageText, notification.body, 'tabs/notification', Strings.gotoText, Strings.hideText);
+        }
+      );
+    }
   }
 }
 

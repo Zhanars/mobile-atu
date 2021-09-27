@@ -2,7 +2,6 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {LoadingController} from '@ionic/angular';
 import {NavigationEnd, Router} from "@angular/router";
 import {Service} from "./service";
-import {IonLoaderService} from "../../services/ion-loader.service";
 import {Strings} from "../../classes/strings";
 import {SendServiceDataService} from "../../services/send-service-data.service";
 

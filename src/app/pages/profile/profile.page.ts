@@ -6,7 +6,6 @@ import {Storage} from "@capacitor/storage";
 import {INTRO_KEY} from "../../guards/intro.guard";
 import { PopoverComponent } from '../../components/popover/popover.component';
 import {Strings} from "../../classes/strings";
-import {IonLoaderService} from "../../services/ion-loader.service";
 import {IonAlertService} from "../../services/ion-alert.service";
 @Component({
   selector: 'app-profile',

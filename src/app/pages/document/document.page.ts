@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {API_server_url} from "../../../environments/environment";
 import {GenerateURLtokenService} from "../../services/generate-urltoken.service";
 import {Strings} from "../../classes/strings";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-document',
@@ -13,7 +14,7 @@ export class DocumentPage implements OnInit {
   public schedule_subject_url: string;
   public schedule_exam_url: string;
   strings = Strings;
-  constructor() {
+  constructor(public router: Router) {
     this.loadIin();
   }
   loadIin(){
@@ -24,4 +25,12 @@ export class DocumentPage implements OnInit {
   ngOnInit() {
   }
 
+  doRefresh(ev) {
+    this.loadIin();
+    setTimeout(() => {      ev.target.complete();    }, 2000);
+  }
+
+  openUmkd() {
+    this.router.navigate([ 'tabs/document/umkd']);
+  }
 }
