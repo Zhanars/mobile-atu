@@ -44,7 +44,7 @@ export class SendServiceDataService {
     return this.http.get<any[]>(urlstring);
   }
   setNotificationStatusRead(id: string): Observable<any>{
-    const urlstring = API_server_url + 'notification/update.php/?key=' + GenerateURLtokenService.getKey() + '&lang=' + Strings.user_lang;
+    const urlstring = API_server_url + 'notification/update.php?key=' + GenerateURLtokenService.getKey() + '&lang=' + Strings.user_lang;
     console.log(urlstring);
     return this.http.post(urlstring, new URLSearchParams({'notification_id':  id, 'read': "true"}), httpOptions);
   }
@@ -72,7 +72,7 @@ export class SendServiceDataService {
     this.http.get(url).subscribe();
   }
   resetMobilePassword(iin) {
-    const urlstring = API_server_url + "/profile/forgotpasswordmobile/?key=" + GenerateURLtokenService.getKey() + '&iin=' + iin;
+    const urlstring = API_server_url + "profile/forgotpasswordmobile/?key=" + GenerateURLtokenService.getKey() + '&iin=' + iin;
     console.log(urlstring);
     return this.http.get(urlstring);
   }

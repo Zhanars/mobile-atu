@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "343911531880",
+    "project_id": "atu-push",
+    "storage_bucket": "atu-push.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343911531880:android:461ff4cb1d1287ce1b42dd",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343911531880-hc5tj93blp70ulb1c5fcfhbt7l8v1bb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6zl-51QZrGvZe3Cjcb8RssD087dFK-CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343911531880-hc5tj93blp70ulb1c5fcfhbt7l8v1bb1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343911531880-3hgnk0v9kmgqb60e0um7d5tacuvsg60t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.atu.uit"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343911531880:android:e7447bb99bc7d0621b42dd",
+        "android_client_info": {
+          "package_name": "kz.atu.uit.smart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343911531880-hc5tj93blp70ulb1c5fcfhbt7l8v1bb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6zl-51QZrGvZe3Cjcb8RssD087dFK-CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343911531880-hc5tj93blp70ulb1c5fcfhbt7l8v1bb1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343911531880-3hgnk0v9kmgqb60e0um7d5tacuvsg60t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.atu.uit"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343911531880:android:a81231ccd30a59311b42dd",
+        "android_client_info": {
+          "package_name": "ru.kz.asda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "343911531880-hc5tj93blp70ulb1c5fcfhbt7l8v1bb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6zl-51QZrGvZe3Cjcb8RssD087dFK-CY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "343911531880-hc5tj93blp70ulb1c5fcfhbt7l8v1bb1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "343911531880-3hgnk0v9kmgqb60e0um7d5tacuvsg60t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "kz.atu.uit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
