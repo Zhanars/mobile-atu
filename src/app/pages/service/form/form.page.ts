@@ -80,6 +80,7 @@ export class FormPage {
     Object.keys(this.formG.controls).forEach(key => {
         this.formData.append(key, this.formG.controls[key].value);
     });
+    this.formData.append('user_id', Strings.user_id.toString());
     this.serviceDataService.sendFile(this.formData, String(this.form_id)).subscribe(
       (res: any) => {
         console.log(res);
