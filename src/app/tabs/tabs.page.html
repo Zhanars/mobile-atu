@@ -26,7 +26,10 @@
 
 
         <ion-icon class="asd" name="notifications-outline"></ion-icon>
-        <ion-badge class="notifications-badge" id="notifications-badge" color="danger">{{countNotifications}}</ion-badge>
+
+        <ion-badge class="notifications-badge" id="notifications-badge" color="danger" [class.ion-page-invisible]= "(countNotifications>0) ?  '':'tubsPage' " >
+          {{countNotifications}}
+        </ion-badge>
 
       <!--      <ion-label>Уведомления</ion-label>-->
     </ion-tab-button>
