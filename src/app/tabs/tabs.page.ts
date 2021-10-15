@@ -32,6 +32,6 @@ countNotifications='0';
 
   loadStr() {
     this.ngZone.run(() => {this.sendServiceDataService.loadStrings(Strings.user_lang).subscribe(      (x: ConfigStrings) => {        Strings.setString(x);      }); });
+    }
 
-  }
 }
